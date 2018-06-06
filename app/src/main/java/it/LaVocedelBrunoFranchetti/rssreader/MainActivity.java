@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private ActionBar actionBar;
     private Context context;
     private WebView webView;
+
     private boolean isNetworkAvailable(Context context) {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
@@ -64,20 +65,23 @@ public class MainActivity extends AppCompatActivity {
             case R.id.mail:
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("message/rfc822");
-                i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"emiliodallatorre12@live.com"});
+                i.putExtra(Intent.EXTRA_EMAIL, new String[]{"emiliodallatorre12@live.com"});
                 try {
-                    startActivity(Intent.createChooser(i, "Scegli come inviarlo:"));
+                    startActivity(Intent.createChooser(i, getResources().getString(R.string.intent_send)));
                 } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(MainActivity.this, "Non risulta esserci alcun client di email attualmente installato su questo dispositivo.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, getResources().getString(R.string.intent_error), Toast.LENGTH_LONG).show();
                 }
                 break;
             case R.id.rate:
-                try {startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=it.LaVocedelBrunoFranchetti.rssreader")));
-        } catch (android.content.ActivityNotFoundException anfe) {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=it.LaVocedelBrunoFranchetti.rssreader")));
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.intent_store))));
+                } catch (android.content.ActivityNotFoundException anfe) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.intent_raw_url))));
+                }
+                break;
         }
-                break;}
-        return true;}
+        return true;
+    }
 
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -85,9 +89,9 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        listView = (ListView) findViewById(R.id.listView);
+        listView = findViewById(R.id.listView);
 
-        new HaberServisiAsynTask().execute("http://istitutobrunofranchetti.gov.it/giornalino/feed/");
+        new HaberServisiAsynTask().execute(getResources().getString(R.string.rss_link));
 
         actionBar = getSupportActionBar();
 
@@ -101,7 +105,8 @@ public class MainActivity extends AppCompatActivity {
         AdView mAdView = (AdView) this.findViewById(R.id.adViewINMAIN);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-*/    }
+*/
+    }
 
     class HaberServisiAsynTask extends AsyncTask<String, String, List<Model>> {
 
@@ -167,14 +172,16 @@ public class MainActivity extends AppCompatActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-*/                        Model model = new Model();
+*/
+                        Model model = new Model();
                         model.setTitle(title);
                         model.setLink(link);
                         model.setDate(date);
                         model.setCreator(creator);
 /*                        model.setImage(resizedbitmap);
                         model.setDescription(description);
-*/                        modelList.add(model);
+*/
+                        modelList.add(model);
                         publishProgress("Caricamento...");
                     }
 
