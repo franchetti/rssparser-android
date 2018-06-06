@@ -67,9 +67,7 @@ public class CustomAdaptor extends BaseAdapter {
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         title.setText(model.getTitle());
         date_and_creator.
-                setText(String.format("%02d:%02d", date.getHours(), date.getMinutes()) + " | " +
-                        dateFormat.format(date) + "   |   " +
-                        model.getCreator());
+                setText(String.format("%s | %s   |   %s", String.format("%02d:%02d", date.getHours(), date.getMinutes()), dateFormat.format(date), model.getCreator()));
 /*        Bitmap bitmap = model.getImage();
         image.setImageBitmap(bitmap);
         description.setText(description.toString());

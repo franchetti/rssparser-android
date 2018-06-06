@@ -22,5 +22,6 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getTargetContext();
 
         assertEquals("it.LaVocedelBrunoFranchetti.rssreader", appContext.getPackageName());
+        assertEquals("it.LaVocedelBrunoFranchetti.rssreader", appContext.getPackageName());
     }
 }

@@ -4,6 +4,7 @@
     <string name="mail">Contatta lo sviluppatore</string>
     <string name="rate">Valuta questa app</string>
     <string name="who">Chi siamo</string>
+    <string name="loading">Caricamento in corso...</string>
     <string name="intent.send">"Scegli come inviarlo:"</string>
     <string name="intent.error">Non risulta esserci alcun client di email attualmente installato su questo dispositivo.</string>
     <string name="intent.store">market://details?id=it.LaVocedelBrunoFranchetti.rssreader</string>

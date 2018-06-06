@@ -124,9 +124,7 @@ public class MainActivity extends AppCompatActivity {
                 if (baglantiDurumu == HttpURLConnection.HTTP_OK) {
 
                     BufferedInputStream bufferedInputStream = new BufferedInputStream(connessione.getInputStream());
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CUPCAKE) {
-                        publishProgress("Caricamento in corso...");
-                    }
+                    publishProgress(getResources().getString(R.string.loading));
                     DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
                     DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
                     Document document = documentBuilder.parse(bufferedInputStream);
