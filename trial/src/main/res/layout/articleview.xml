@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:background="#58636f"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="it.LaVocedelBrunoFranchetti.rssreader.MainActivity">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/titlein"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#fff"
+                android:textSize="22sp"
+                android:textAlignment="center"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:id="@+id/creatorin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#fff"
+                android:textSize="20sp"/>
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@color/colorPrimary"
+                android:id="@+id/iw" />
+
+            <TextView
+                android:id="@+id/art"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="#fafafa"
+                android:textSize="18sp"
+                android:textColor="#000"
+                android:padding="14dp"
+                android:fontFamily="sans-serif"
+                android:lineSpacingExtra="8sp" />
+
+            <Button
+                android:text="Condividi questo articolo!"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/share"
+                android:onClick="share" />
+
+            <Button
+                android:text="Inviaci il tuo articolo!"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/send"
+                android:onClick="share" />
+
+            <Button
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Visualizza la versione completa di questo articolo!" />
+
+            <!--            <com.google.android.gms.ads.AdView
+                            android:id="@+id/adViewINART"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            ads:adSize="BANNER"
+                            ads:adUnitId="ca-app-pub-4586118376037791/5427096169" />
+-->
+                    </LinearLayout>
+                </ScrollView>
+
+            </RelativeLayout>
