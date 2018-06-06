@@ -35,7 +35,7 @@ import java.net.URL;
 public class webb extends Activity {
 
     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-    private Context context;
+//    private Context context;
     private WebView webView;
 
     public void onCreate(Bundle savedInstanceState) {
