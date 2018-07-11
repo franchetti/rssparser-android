@@ -3,13 +3,11 @@ package it.LaVocedelBrunoFranchetti.rssreader;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.StrictMode;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,12 +23,12 @@ import java.util.List;
 
 public class CustomAdaptor extends BaseAdapter {
 
+    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
     private Context context;
     private List<Model> modelList;
-    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
 
-    public CustomAdaptor(Context context, List<Model> modelList) {
+    CustomAdaptor(Context context, List<Model> modelList) {
         this.context = context;
         this.modelList = modelList;
 
