@@ -1,23 +1,6 @@
 package it.LaVocedelBrunoFranchetti.rssreader
 
-import android.app.ProgressDialog
-import android.content.Context
-import android.content.Intent
-import android.net.ConnectivityManager
-import android.net.Uri
 import android.os.AsyncTask
-import android.os.Build
-import android.os.Bundle
-import android.support.v7.app.ActionBar
-import android.support.v7.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.webkit.WebView
-import android.widget.ListView
-import android.widget.Toast
-
-import org.w3c.dom.Document
 import org.w3c.dom.Element
 
 import java.io.BufferedInputStream
@@ -26,12 +9,8 @@ import java.net.URL
 
 import javax.xml.parsers.DocumentBuilderFactory
 
-class ParseFeed() : AsyncTask<Void, Void, String>() {
-    override fun doInBackground(vararg p0: Void?): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    fun feedData(): Array<Array<String>>? {
+class ParseFeed : AsyncTask<Void, Void, String>() {
+    override fun doInBackground(vararg params: Void?): String? {
         val url = URL("http://istitutobrunofranchetti.gov.it/giornalino/feed")
         val connection = url.openConnection() as HttpURLConnection
         val bufferedInputStream = BufferedInputStream(connection.inputStream)
@@ -69,7 +48,7 @@ class ParseFeed() : AsyncTask<Void, Void, String>() {
             dataParsed[i][6] = comment
         }
         println(dataParsed!![2][5])
-        return dataParsed
+        return null
     }
 
     override fun onPreExecute() {
