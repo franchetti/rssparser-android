@@ -1,11 +1,13 @@
 package it.LaVocedelBrunoFranchetti.rssreader
 
 import android.os.AsyncTask
+import android.util.Log
 import org.w3c.dom.Element
 
 import java.io.BufferedInputStream
 import java.net.HttpURLConnection
 import java.net.URL
+import java.util.*
 
 import javax.xml.parsers.DocumentBuilderFactory
 
@@ -18,7 +20,7 @@ class ParseFeed : AsyncTask<Void, Void, String>() {
         val documentBuilder = documentBuilderFactory.newDocumentBuilder()
         val document = documentBuilder.parse(bufferedInputStream)
         val itemlist = document.getElementsByTagName("item")
-        val dataParsed: Array<Array<String>>? = null
+        lateinit var dataParsed: Array<Array<String>>
 
         for (i in 0 until itemlist.length) {
             val element = itemlist.item(i) as Element
@@ -40,15 +42,14 @@ class ParseFeed : AsyncTask<Void, Void, String>() {
             // TODO: add interaction with category.
             val category = nodeListCategory.item(0).firstChild.nodeValue
 
-            dataParsed!![i][1] = title
+            dataParsed[i][1] = title
             dataParsed[i][2] = link
             dataParsed[i][3] = date
             dataParsed[i][4] = creator
             dataParsed[i][5] = description
             dataParsed[i][6] = comment
         }
-        println(dataParsed!![2][5])
-        return null
+        return Arrays.toString(dataParsed)
     }
 
     override fun onPreExecute() {
