@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">http://istitutobrunofranchetti.gov.it/giornalino/</domain>
+        <domain includeSubdomains="true">istitutobrunofranchetti.gov.it</domain>
     </domain-config>
 </network-security-config>
