@@ -12,6 +12,8 @@ import java.util.*
 import javax.xml.parsers.DocumentBuilderFactory
 
 class ParseFeed : AsyncTask<Void, Void, String>() {
+    private val dataParsed: Array<Array<String>>? = null
+
     override fun doInBackground(vararg params: Void?): String? {
         val url = URL("http://istitutobrunofranchetti.gov.it/giornalino/feed")
         val connection = url.openConnection() as HttpURLConnection
@@ -20,7 +22,6 @@ class ParseFeed : AsyncTask<Void, Void, String>() {
         val documentBuilder = documentBuilderFactory.newDocumentBuilder()
         val document = documentBuilder.parse(bufferedInputStream)
         val itemlist = document.getElementsByTagName("item")
-        lateinit var dataParsed: Array<Array<String>>
 
         for (i in 0 until itemlist.length) {
             val element = itemlist.item(i) as Element
@@ -33,16 +34,16 @@ class ParseFeed : AsyncTask<Void, Void, String>() {
             val nodeListComment = element.getElementsByTagName("slash:comments")
             val nodeListCategory = element.getElementsByTagName("category")
 
-            val title = nodeListTitle.item(0).firstChild.nodeValue
-            val link = nodeListLink.item(0).firstChild.nodeValue
-            val date = nodeListDate.item(0).firstChild.nodeValue
-            val creator = nodeListCreator.item(0).firstChild.nodeValue
-            val description = nodeListDescription.item(0).firstChild.nodeValue
-            val comment = nodeListComment.item(0).firstChild.nodeValue
+            val title = nodeListTitle.item(i).firstChild.nodeValue
+            val link = nodeListLink.item(i).firstChild.nodeValue
+            val date = nodeListDate.item(i).firstChild.nodeValue
+            val creator = nodeListCreator.item(i).firstChild.nodeValue
+            val description = nodeListDescription.item(i).firstChild.nodeValue
+            val comment = nodeListComment.item(i).firstChild.nodeValue
             // TODO: add interaction with category.
-            val category = nodeListCategory.item(0).firstChild.nodeValue
+            val category = nodeListCategory.item(i).firstChild.nodeValue
 
-            dataParsed[i][1] = title
+            dataParsed!![i][1] = title
             dataParsed[i][2] = link
             dataParsed[i][3] = date
             dataParsed[i][4] = creator
@@ -59,6 +60,6 @@ class ParseFeed : AsyncTask<Void, Void, String>() {
 
     override fun onPostExecute(result: String?) {
         super.onPostExecute(result)
-        // ...
+        println(dataParsed!![5][6])
     }
 }
