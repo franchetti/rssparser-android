@@ -1,5 +1,6 @@
 package it.LaVocedelBrunoFranchetti.rssreader
 
+import android.content.Context
 import android.os.AsyncTask
 import android.util.Log
 import org.w3c.dom.Element
@@ -15,7 +16,7 @@ class ParseFeed : AsyncTask<Void, Void, String>() {
     private val dataParsed: Array<Array<String>>? = null
 
     override fun doInBackground(vararg params: Void?): String? {
-        val url = URL("http://istitutobrunofranchetti.gov.it/giornalino/feed")
+        val url = URL((R.string.rss_link))
         val connection = url.openConnection() as HttpURLConnection
         val bufferedInputStream = BufferedInputStream(connection.inputStream)
         val documentBuilderFactory = DocumentBuilderFactory.newInstance()
