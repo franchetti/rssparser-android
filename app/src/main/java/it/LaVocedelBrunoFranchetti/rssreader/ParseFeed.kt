@@ -2,7 +2,9 @@ package it.LaVocedelBrunoFranchetti.rssreader
 
 import android.content.Context
 import android.os.AsyncTask
+import android.provider.Settings.System.getString
 import android.util.Log
+import it.LaVocedelBrunoFranchetti.rssreader.R.string.rss_link
 import org.w3c.dom.Element
 
 import java.io.BufferedInputStream
@@ -13,10 +15,10 @@ import java.util.*
 import javax.xml.parsers.DocumentBuilderFactory
 
 class ParseFeed : AsyncTask<Void, Void, String>() {
-    private val dataParsed: Array<Array<String>>? = null
 
     override fun doInBackground(vararg params: Void?): String? {
-        val url = URL((R.string.rss_link))
+        val rsslink = "http://istitutobrunofranchetti.gov.it/giornalino/feed/"
+        val url = URL(rsslink)
         val connection = url.openConnection() as HttpURLConnection
         val bufferedInputStream = BufferedInputStream(connection.inputStream)
         val documentBuilderFactory = DocumentBuilderFactory.newInstance()
@@ -44,6 +46,7 @@ class ParseFeed : AsyncTask<Void, Void, String>() {
             // TODO: add interaction with category.
             val category = nodeListCategory.item(i).firstChild.nodeValue
 
+            println(title)
             dataParsed!![i][1] = title
             dataParsed[i][2] = link
             dataParsed[i][3] = date
