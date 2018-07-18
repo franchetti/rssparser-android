@@ -15,6 +15,7 @@ import java.util.*
 import javax.xml.parsers.DocumentBuilderFactory
 
 class ParseFeed : AsyncTask<Void, Void, String>() {
+    val TAG: String = "AsyncTask"
 
     override fun doInBackground(vararg params: Void?): String? {
         val rssLink = "http://istitutobrunofranchetti.gov.it/giornalino/feed/"
@@ -35,8 +36,8 @@ class ParseFeed : AsyncTask<Void, Void, String>() {
             val nodeListDate = element.getElementsByTagName("pubDate")
             val nodeListCreator = element.getElementsByTagName("dc:creator")
             val nodeListDescription = element.getElementsByTagName("description")
-            val nodeListComment = element.getElementsByTagName("slash:comments")
-            val nodeListCategory = element.getElementsByTagName("category")
+            /* val nodeListComment = element.getElementsByTagName("slash:comments")
+            val nodeListCategory = element.getElementsByTagName("category") */
 
             val title = nodeListTitle.item(0).firstChild.nodeValue
             val link = nodeListLink.item(0).firstChild.nodeValue
@@ -47,10 +48,9 @@ class ParseFeed : AsyncTask<Void, Void, String>() {
             /* val comment = nodeListComment.item(i).firstChild.nodeValue
             val category = nodeListCategory.item(i).firstChild.nodeValue */
 
-            Log.d("DEBUG","$title§$link§$date§$creator§$description")
             dataParsed[i] = "$title§$link§$date§$creator§$description"
+            Log.d(TAG, "Parsed article nr." + ( i + 1 ) + ".")
         }
-        // for (i in 0 until dataParsed.size) Log.d("DEBUG",dataParsed[i])
         return dataParsed[3]
     }
 
