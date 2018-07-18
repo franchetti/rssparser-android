@@ -1,22 +1,26 @@
 package it.LaVocedelBrunoFranchetti.rssreader
 
+import android.content.Context
 import android.os.AsyncTask
 import android.util.Log
+import android.view.View
+import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import org.w3c.dom.Element
 
 import java.io.BufferedInputStream
 import java.net.HttpURLConnection
 import java.net.URL
+import java.security.AccessController.getContext
 import java.util.*
 
 import javax.xml.parsers.DocumentBuilderFactory
 
-import kotlinx.android.synthetic.main.activity_main.loading
-
 class ParseFeed : AsyncTask<Void, Void, ArrayList<Model?>>() {
     private val TAG: String = "AsyncTask"
     private val modelList = ArrayList<Model?>()
+    val loading = ProgressBar(MainActivity().applicationContext)
 
     override fun doInBackground(vararg params: Void?): ArrayList<Model?> {
         val rssLink = "http://istitutobrunofranchetti.gov.it/giornalino/feed/"
@@ -55,6 +59,8 @@ class ParseFeed : AsyncTask<Void, Void, ArrayList<Model?>>() {
             model?.creator = creator
             model?.description = description
             modelList.add(model)
+
+            loading.progress = i
         }
         Log.d(TAG, "Parsed all the articles correctly.")
 
@@ -64,9 +70,8 @@ class ParseFeed : AsyncTask<Void, Void, ArrayList<Model?>>() {
 
     override fun onPreExecute() {
         super.onPreExecute()
-        val loading = (R.id.loading) as ProgressBar
+        loading.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         loading.max = 50
-        loading.progress = 0
     }
 
     override fun onPostExecute(result: ArrayList<Model?>) {
