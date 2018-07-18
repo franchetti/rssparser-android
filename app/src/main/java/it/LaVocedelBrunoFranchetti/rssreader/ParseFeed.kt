@@ -17,18 +17,18 @@ import javax.xml.parsers.DocumentBuilderFactory
 class ParseFeed : AsyncTask<Void, Void, String>() {
 
     override fun doInBackground(vararg params: Void?): String? {
-        val rsslink = "http://istitutobrunofranchetti.gov.it/giornalino/feed/"
-        val url = URL(rsslink)
+        val rssLink = "http://istitutobrunofranchetti.gov.it/giornalino/feed/"
+        val url = URL(rssLink)
         val connection = url.openConnection() as HttpURLConnection
         val bufferedInputStream = BufferedInputStream(connection.inputStream)
         val documentBuilderFactory = DocumentBuilderFactory.newInstance()
         val documentBuilder = documentBuilderFactory.newDocumentBuilder()
         val document = documentBuilder.parse(bufferedInputStream)
-        val itemlist = document.getElementsByTagName("item")
-        val dataParsed: Array<String>? = null
+        val itemList = document.getElementsByTagName("item")
+        val dataParsed = arrayOfNulls<String>(50)
 
-        for (i in 0 until itemlist.length) {
-            val element = itemlist.item(i) as Element
+        for (i in 0 until itemList.length) {
+            val element = itemList.item(i) as Element
 
             val nodeListTitle = element.getElementsByTagName("title")
             val nodeListLink = element.getElementsByTagName("link")
@@ -38,19 +38,20 @@ class ParseFeed : AsyncTask<Void, Void, String>() {
             val nodeListComment = element.getElementsByTagName("slash:comments")
             val nodeListCategory = element.getElementsByTagName("category")
 
-            val title = nodeListTitle.item(i).firstChild.nodeValue
-            val link = nodeListLink.item(i).firstChild.nodeValue
-            val date = nodeListDate.item(i).firstChild.nodeValue
-            val creator = nodeListCreator.item(i).firstChild.nodeValue
-            val description = nodeListDescription.item(i).firstChild.nodeValue
-            val comment = nodeListComment.item(i).firstChild.nodeValue
-            // TODO: add interaction with category.
-            val category = nodeListCategory.item(i).firstChild.nodeValue
+            val title = nodeListTitle.item(0).firstChild.nodeValue
+            val link = nodeListLink.item(0).firstChild.nodeValue
+            val date = nodeListDate.item(0).firstChild.nodeValue
+            val creator = nodeListCreator.item(0).firstChild.nodeValue
+            val description = nodeListDescription.item(0).firstChild.nodeValue
+            // TODO: add interaction with category and comments.
+            /* val comment = nodeListComment.item(i).firstChild.nodeValue
+            val category = nodeListCategory.item(i).firstChild.nodeValue */
 
-            println(title)
-            dataParsed!![i] = "$title§$link§$date§$creator§$description§$comment"
+            Log.d("DEBUG","$title§$link§$date§$creator§$description")
+            dataParsed[i] = "$title§$link§$date§$creator§$description"
         }
-        return dataParsed!![3]
+        // for (i in 0 until dataParsed.size) Log.d("DEBUG",dataParsed[i])
+        return dataParsed[3]
     }
 
     override fun onPreExecute() {
