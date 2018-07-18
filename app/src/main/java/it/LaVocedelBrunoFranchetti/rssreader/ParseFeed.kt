@@ -14,12 +14,12 @@ import java.util.*
 
 import javax.xml.parsers.DocumentBuilderFactory
 
-class ParseFeed : AsyncTask<Void, Void, Array<Model>>() {
+class ParseFeed : AsyncTask<Void, Void, ArrayList<Model?>>() {
     private val TAG: String = "AsyncTask"
     private val dataParsed = arrayOfNulls<String>(50)
-    private val modelList = ArrayList<Model>()
+    private val modelList = ArrayList<Model?>()
 
-    override fun doInBackground(vararg params: Void?): Array<Model> {
+    override fun doInBackground(vararg params: Void?): ArrayList<Model?> {
         val rssLink = "http://istitutobrunofranchetti.gov.it/giornalino/feed/"
         val url = URL(rssLink)
         val connection = url.openConnection() as HttpURLConnection
@@ -56,10 +56,11 @@ class ParseFeed : AsyncTask<Void, Void, Array<Model>>() {
             model?.creator = title
             model?.description = title
             Log.d(TAG, "Parsed article nr." + ( i + 1 ) + ".")
+            modelList.add(model)
         }
 
         // TODO: Work here.
-        return modelList;
+        return modelList
     }
 
     override fun onPreExecute() {
@@ -67,8 +68,8 @@ class ParseFeed : AsyncTask<Void, Void, Array<Model>>() {
         // ...
     }
 
-    override fun onPostExecute(result: Array<String?>) {
-        super.onPostExecute(dataParsed)
+    override fun onPostExecute(result: ArrayList<Model?>) {
+        super.onPostExecute(result)
         // ...
     }
 }
