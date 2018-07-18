@@ -1,10 +1,8 @@
 package it.LaVocedelBrunoFranchetti.rssreader
 
-import android.content.Context
 import android.os.AsyncTask
-import android.provider.Settings.System.getString
 import android.util.Log
-import it.LaVocedelBrunoFranchetti.rssreader.R.string.rss_link
+import android.widget.ProgressBar
 import org.w3c.dom.Element
 
 import java.io.BufferedInputStream
@@ -14,9 +12,10 @@ import java.util.*
 
 import javax.xml.parsers.DocumentBuilderFactory
 
+import kotlinx.android.synthetic.main.activity_main.loading
+
 class ParseFeed : AsyncTask<Void, Void, ArrayList<Model?>>() {
     private val TAG: String = "AsyncTask"
-    private val dataParsed = arrayOfNulls<String>(50)
     private val modelList = ArrayList<Model?>()
 
     override fun doInBackground(vararg params: Void?): ArrayList<Model?> {
@@ -51,13 +50,13 @@ class ParseFeed : AsyncTask<Void, Void, ArrayList<Model?>>() {
 
             val model: Model? = null
             model?.title = title
-            model?.link = title
-            model?.date = title
-            model?.creator = title
-            model?.description = title
-            Log.d(TAG, "Parsed article nr." + ( i + 1 ) + ".")
+            model?.link = link
+            model?.date = date
+            model?.creator = creator
+            model?.description = description
             modelList.add(model)
         }
+        Log.d(TAG, "Parsed all the articles correctly.")
 
         // TODO: Work here.
         return modelList
@@ -65,7 +64,9 @@ class ParseFeed : AsyncTask<Void, Void, ArrayList<Model?>>() {
 
     override fun onPreExecute() {
         super.onPreExecute()
-        // ...
+        val loading = (R.id.loading) as ProgressBar
+        loading.max = 50
+        loading.progress = 0
     }
 
     override fun onPostExecute(result: ArrayList<Model?>) {
