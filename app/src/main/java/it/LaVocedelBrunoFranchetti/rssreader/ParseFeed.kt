@@ -25,6 +25,7 @@ class ParseFeed : AsyncTask<Void, Void, String>() {
         val documentBuilder = documentBuilderFactory.newDocumentBuilder()
         val document = documentBuilder.parse(bufferedInputStream)
         val itemlist = document.getElementsByTagName("item")
+        val dataParsed: Array<String>? = null
 
         for (i in 0 until itemlist.length) {
             val element = itemlist.item(i) as Element
@@ -47,14 +48,9 @@ class ParseFeed : AsyncTask<Void, Void, String>() {
             val category = nodeListCategory.item(i).firstChild.nodeValue
 
             println(title)
-            dataParsed!![i][1] = title
-            dataParsed[i][2] = link
-            dataParsed[i][3] = date
-            dataParsed[i][4] = creator
-            dataParsed[i][5] = description
-            dataParsed[i][6] = comment
+            dataParsed!![i] = "$title§$link§$date§$creator§$description§$comment"
         }
-        return Arrays.toString(dataParsed)
+        return dataParsed!![3]
     }
 
     override fun onPreExecute() {
@@ -64,6 +60,6 @@ class ParseFeed : AsyncTask<Void, Void, String>() {
 
     override fun onPostExecute(result: String?) {
         super.onPostExecute(result)
-        println(dataParsed!![5][6])
+        // ...
     }
 }
