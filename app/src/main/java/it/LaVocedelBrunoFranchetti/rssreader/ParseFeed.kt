@@ -14,10 +14,11 @@ import java.util.*
 
 import javax.xml.parsers.DocumentBuilderFactory
 
-class ParseFeed : AsyncTask<Void, Void, String>() {
-    val TAG: String = "AsyncTask"
+class ParseFeed : AsyncTask<Void, Void, Array<String?>>() {
+    private val TAG: String = "AsyncTask"
+    private val dataParsed = arrayOfNulls<String>(50)
 
-    override fun doInBackground(vararg params: Void?): String? {
+    override fun doInBackground(vararg params: Void?): Array<String?> {
         val rssLink = "http://istitutobrunofranchetti.gov.it/giornalino/feed/"
         val url = URL(rssLink)
         val connection = url.openConnection() as HttpURLConnection
@@ -26,7 +27,6 @@ class ParseFeed : AsyncTask<Void, Void, String>() {
         val documentBuilder = documentBuilderFactory.newDocumentBuilder()
         val document = documentBuilder.parse(bufferedInputStream)
         val itemList = document.getElementsByTagName("item")
-        val dataParsed = arrayOfNulls<String>(50)
 
         for (i in 0 until itemList.length) {
             val element = itemList.item(i) as Element
@@ -51,7 +51,7 @@ class ParseFeed : AsyncTask<Void, Void, String>() {
             dataParsed[i] = "$title§$link§$date§$creator§$description"
             Log.d(TAG, "Parsed article nr." + ( i + 1 ) + ".")
         }
-        return dataParsed[3]
+        return dataParsed
     }
 
     override fun onPreExecute() {
@@ -59,8 +59,8 @@ class ParseFeed : AsyncTask<Void, Void, String>() {
         // ...
     }
 
-    override fun onPostExecute(result: String?) {
-        super.onPostExecute(result)
+    override fun onPostExecute(result: Array<String?>) {
+        super.onPostExecute(dataParsed)
         // ...
     }
 }
