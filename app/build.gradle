@@ -7,6 +7,9 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 28
     buildToolsVersion "28.0.1"
+    lintOptions {
+        abortOnError false
+    }
     defaultConfig {
         applicationId "it.LaVocedelBrunoFranchetti.rssreader"
         minSdkVersion 20
