@@ -4,8 +4,10 @@ android:
   components:
     # The BuildTools version used by your project
     - tools
-    - build-tools-28.0.0
     - platform-tools
+    - tools
+    - build-tools-$ANDROID_BUILD_TOOLS
+    - android-$ANDROID_API
 
     # Additional components
     - extra-google-google_play_services
@@ -17,9 +19,9 @@ android:
     - android-28
 
   licenses:
-    - 'android-sdk-preview-license-.+'
-    - 'android-sdk-license-.+'
-    - 'google-gdk-license-.+'
+    - android-sdk-preview-license-.+
+    - android-sdk-license-.+
+    - google-gdk-license-.+
 
 os:
   - linux
