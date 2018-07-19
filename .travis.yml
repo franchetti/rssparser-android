@@ -20,6 +20,7 @@ android:
     - addon-google_apis-google-28
 
   licenses:
+    - 'android-sdk-preview-license-.+'
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
 
