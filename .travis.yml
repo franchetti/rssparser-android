@@ -1,4 +1,6 @@
 language: android
+jdk:
+- oraclejdk8
 android:
 components:
 # Uncomment the lines below if you want to
@@ -35,7 +37,7 @@ before_install:
 - chmod +x gradlew
 
 cache:
-  
+
 directories:
 - $HOME/.gradle/caches/
 - $HOME/.gradle/wrapper/
