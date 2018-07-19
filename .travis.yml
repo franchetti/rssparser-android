@@ -19,7 +19,7 @@ android:
     - extra-android-m2repository
     - addon-google_apis-google-28
 
-#  licenses:
+  licenses:
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
 
