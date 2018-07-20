@@ -1,4 +1,4 @@
-# rssparser-android<div style="text-align: right">[![Build Status](https://travis-ci.org/franchetti/rssparser-android.svg?branch=kotlin)](https://travis-ci.org/franchetti/rssparser-android)</div>
+# rssparser-android [![Build Status](https://travis-ci.org/franchetti/rssparser-android.svg?branch=kotlin)](https://travis-ci.org/franchetti/rssparser-android)
 ## Description
 This is a simple RSS parser app for Android.
 It is written in Kotlin and wrapped with Gradle.
