@@ -14,8 +14,8 @@ android {
         applicationId "it.LaVocedelBrunoFranchetti.rssreader"
         minSdkVersion 20
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 9
+        versionName "3.0 - 20 lug 2018"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

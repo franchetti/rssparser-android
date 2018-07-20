@@ -1,4 +1,4 @@
-package it.LaVocedelBrunoFranchetti.rssreader
+/* package it.LaVocedelBrunoFranchetti.rssreader
 
 import android.app.Activity
 import android.content.Context
@@ -49,19 +49,19 @@ class CustomAdaptor internal constructor(private val context: Context, private v
         image.setImageBitmap(bitmap);
         description.setText(description.toString());
 */
-        rootView.setOnClickListener {
+       /*  rootView.setOnClickListener {
             val link = model.link
             val title = model.title
             val creator = model.creator
-            val intent = Intent(context, webb::class.java)
             intent.putExtra("link", link)
             intent.putExtra("title", title)
             intent.putExtra("creator", creator)
             context.startActivity(intent)
-        }
+        }*/
 
         rootView.setOnTouchListener { view, motionEvent -> false }
 
         return rootView
     }
 }
+        */
