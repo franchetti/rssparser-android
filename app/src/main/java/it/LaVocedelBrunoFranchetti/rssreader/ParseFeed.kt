@@ -33,7 +33,8 @@ class ParseFeed : AsyncTask<Void, Void, ArrayList<Model?>>() {
             val nodeListDate = element.getElementsByTagName("pubDate")
             val nodeListCreator = element.getElementsByTagName("dc:creator")
             val nodeListDescription = element.getElementsByTagName("description")
-            /* val nodeListComment = element.getElementsByTagName("slash:comments")
+            /* TODO: add interaction with category and comments.
+            val nodeListComment = element.getElementsByTagName("slash:comments")
             val nodeListCategory = element.getElementsByTagName("category") */
 
             val title = nodeListTitle.item(0).firstChild.nodeValue
@@ -41,8 +42,8 @@ class ParseFeed : AsyncTask<Void, Void, ArrayList<Model?>>() {
             val date = nodeListDate.item(0).firstChild.nodeValue
             val creator = nodeListCreator.item(0).firstChild.nodeValue
             val description = nodeListDescription.item(0).firstChild.nodeValue
-            // TODO: add interaction with category and comments.
-            /* val comment = nodeListComment.item(i).firstChild.nodeValue
+            /* TODO: add interaction with category and comments.
+            val comment = nodeListComment.item(i).firstChild.nodeValue
             val category = nodeListCategory.item(i).firstChild.nodeValue */
 
             val model: Model? = null
@@ -54,7 +55,6 @@ class ParseFeed : AsyncTask<Void, Void, ArrayList<Model?>>() {
             modelList.add(model)
         }
         Log.d(TAG, "Parsed all the articles correctly.")
-
         // TODO: Work here.
         return modelList
     }
@@ -65,6 +65,10 @@ class ParseFeed : AsyncTask<Void, Void, ArrayList<Model?>>() {
 
     override fun onPostExecute(result: ArrayList<Model?>) {
         super.onPostExecute(result)
-        // ...
+        
+    }
+
+    override fun onProgressUpdate(vararg values: Void?) {
+        super.onProgressUpdate(*values)
     }
 }
