@@ -5,6 +5,7 @@ android:
     # use the latest revision of Android SDK Tools
     - tools
     - platform-tools
+    - tools
 
     # The BuildTools version used by your project
     - build-tools-$ANDROID_BUILD_TOOLS
@@ -31,15 +32,6 @@ before_install:
   - yes | sdkmanager "platforms;android-27"
   - chmod +x gradlew
 
-before_script:
-  # Create and start emulator
-  - echo no | android create avd --force -n test -t android-$ANDROID_API --abi armeabi-v7a
-  - emulator -avd test -no-skin -no-audio -no-window &
-  - android-wait-for-emulator
-  - sleep 180
-  - adb devices
-  - adb shell input keyevent 82 &
-
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -49,3 +41,6 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
     - $HOME/.android/build-cache
+
+script:
+  - ./gradlew build assembleDebug
