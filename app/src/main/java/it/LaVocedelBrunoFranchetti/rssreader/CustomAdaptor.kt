@@ -1,4 +1,4 @@
-/* package it.LaVocedelBrunoFranchetti.rssreader
+package it.LaVocedelBrunoFranchetti.rssreader
 
 import android.app.Activity
 import android.content.Context
@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.LinearLayout
 import android.widget.TextView
+
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -32,7 +33,7 @@ class CustomAdaptor internal constructor(private val context: Context, private v
         StrictMode.setThreadPolicy(policy)
 
         val rootView = (context as Activity).layoutInflater.inflate(R.layout.custom_list, null) as LinearLayout
-        val date_and_creator = rootView.findViewById<View>(R.id.date_and_creator) as TextView
+        val date_and_creator = rootView.findViewById(R.id.date_and_creator) as TextView
         val title = rootView.findViewById<View>(R.id.title) as TextView
         //        final ImageView image = (ImageView) rootView.findViewById(R.id.resim);
         //        final TextView description = (TextView) rootView.findViewById(R.id.description);
@@ -49,19 +50,19 @@ class CustomAdaptor internal constructor(private val context: Context, private v
         image.setImageBitmap(bitmap);
         description.setText(description.toString());
 */
-       /*  rootView.setOnClickListener {
+        rootView.setOnClickListener {
             val link = model.link
             val title = model.title
             val creator = model.creator
+            val intent = Intent(context, webb::class.java)
             intent.putExtra("link", link)
             intent.putExtra("title", title)
             intent.putExtra("creator", creator)
             context.startActivity(intent)
-        }*/
+        }
 
         rootView.setOnTouchListener { view, motionEvent -> false }
 
         return rootView
     }
 }
-        */
