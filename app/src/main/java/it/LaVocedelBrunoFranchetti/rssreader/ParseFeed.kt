@@ -1,21 +1,28 @@
 package it.LaVocedelBrunoFranchetti.rssreader
 
+import android.content.Context
 import android.os.AsyncTask
 import android.util.Log
+import it.LaVocedelBrunoFranchetti.rssreader.R.id.listView
 import org.w3c.dom.Element
-
 import java.io.BufferedInputStream
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.*
-
 import javax.xml.parsers.DocumentBuilderFactory
 
-class ParseFeed : AsyncTask<Void, Void, ArrayList<Model?>>() {
-    private val TAG: String = "AsyncTask"
-    private val modelList = ArrayList<Model?>()
 
-    override fun doInBackground(vararg params: Void?): ArrayList<Model?> {
+class ParseFeed : AsyncTask<Void, Void, ArrayList<Model>>() {
+    private val TAG: String = "AsyncTask"
+    private val modelList = ArrayList<Model>()
+    lateinit private var mContext: Context
+
+    fun contextHelper (context: Context) {
+        mContext = context
+    }
+
+
+    override fun doInBackground(vararg params: Void?): ArrayList<Model> {
         val rssLink = "http://istitutobrunofranchetti.gov.it/giornalino/feed/"
         val url = URL(rssLink)
         val connection = url.openConnection() as HttpURLConnection
@@ -46,12 +53,12 @@ class ParseFeed : AsyncTask<Void, Void, ArrayList<Model?>>() {
             val comment = nodeListComment.item(i).firstChild.nodeValue
             val category = nodeListCategory.item(i).firstChild.nodeValue */
 
-            val model: Model? = null
-            model?.title = title
-            model?.link = link
-            model?.date = date
-            model?.creator = creator
-            model?.description = description
+            val model = Model()
+            model.title = title
+            model.link = link
+            model.date = date
+            model.creator = creator
+            model.description = description
             modelList.add(model)
         }
         Log.d(TAG, "Parsed all the articles correctly.")
@@ -63,9 +70,10 @@ class ParseFeed : AsyncTask<Void, Void, ArrayList<Model?>>() {
         super.onPreExecute()
     }
 
-    override fun onPostExecute(result: ArrayList<Model?>) {
-        super.onPostExecute(result)
-        
+    override fun onPostExecute(modelList: ArrayList<Model>) {
+        super.onPostExecute(modelList)
+        val adapter = CustomAdaptor(mContext, modelList)
+        adapter.getView()
     }
 
     override fun onProgressUpdate(vararg values: Void?) {
