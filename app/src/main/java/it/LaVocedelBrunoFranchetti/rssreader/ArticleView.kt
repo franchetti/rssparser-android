@@ -15,20 +15,14 @@ import android.widget.TextView
 import android.widget.Toast
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import org.jsoup.nodes.Element
 
 import java.io.IOException
 import java.net.MalformedURLException
 import java.net.URL
 
-
-/**
- * @author Emilio Dalla Torre.
- */
-class webb : Activity() {
+class ArticleView : Activity() {
 
     internal var policy: StrictMode.ThreadPolicy = StrictMode.ThreadPolicy.Builder().permitAll().build()
-    private val context: Context? = null
     private var webView: WebView? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
