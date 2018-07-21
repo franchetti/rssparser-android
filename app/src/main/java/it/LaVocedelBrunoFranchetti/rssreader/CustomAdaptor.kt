@@ -2,13 +2,13 @@ package it.LaVocedelBrunoFranchetti.rssreader
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.StrictMode
 import android.support.constraint.ConstraintLayout
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.LinearLayout
 import android.widget.TextView
 
 import java.text.SimpleDateFormat
@@ -59,7 +59,7 @@ class CustomAdaptor internal constructor(private val context: Context, private v
         holder.dateandcreator!!.text = dateandcreator
         holder.description!!.text = description.toString()
 
-        /* rootView.setOnClickListener {
+        rootView.setOnClickListener {
             val link = model.link
             val title = model.title
             val creator = model.creator
