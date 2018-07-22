@@ -1,5 +1,6 @@
 package it.LaVocedelBrunoFranchetti.rssreader
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.os.AsyncTask
 import android.support.constraint.ConstraintLayout
@@ -22,6 +23,7 @@ class ParseFeed : AsyncTask<Void, Void, ArrayList<Model>>() {
     fun contextHelper(context: Context) {
         mContext = context
     }
+    private val progressDialog: ProgressDialog = ProgressDialog(mContext)
 
 
     override fun doInBackground(vararg params: Void?): ArrayList<Model> {
@@ -62,6 +64,7 @@ class ParseFeed : AsyncTask<Void, Void, ArrayList<Model>>() {
             model.creator = creator
             model.description = description
             modelList.add(model)
+            progressDialog.progress = i
         }
         Log.d(TAG, "Parsed all the articles correctly.")
         // TODO: Work here.
@@ -70,20 +73,18 @@ class ParseFeed : AsyncTask<Void, Void, ArrayList<Model>>() {
 
     override fun onPreExecute() {
         super.onPreExecute()
-        constraintLayout?
+        progressDialog.max = 50
+        progressDialog.show()
     }
 
     override fun onPostExecute(modelList: ArrayList<Model>) {
         super.onPostExecute(modelList)
         val adapter = CustomAdaptor(mContext, modelList)
-        adapter.getView()
+        // adapter.getView()
+        progressDialog.dismiss()
     }
 
     override fun onProgressUpdate(vararg values: Void?) {
         super.onProgressUpdate(*values)
-    }
-
-    override fun onCreateView() {
-        val constraintLayout: ConstraintLayout = content_main
     }
 }

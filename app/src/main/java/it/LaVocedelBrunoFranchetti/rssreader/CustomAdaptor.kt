@@ -1,11 +1,11 @@
 package it.LaVocedelBrunoFranchetti.rssreader
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.StrictMode
 import android.support.constraint.ConstraintLayout
-import android.support.v4.content.ContextCompat.startActivity
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -45,7 +45,6 @@ class CustomAdaptor internal constructor(private val context: Context, private v
 
     override fun getView(i: Int, view: View, viewGroup: ViewGroup): View {
         StrictMode.setThreadPolicy(policy)
-
 
         val model = modelList[i]
 
