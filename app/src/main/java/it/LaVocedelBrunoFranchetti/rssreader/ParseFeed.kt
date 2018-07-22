@@ -2,8 +2,10 @@ package it.LaVocedelBrunoFranchetti.rssreader
 
 import android.content.Context
 import android.os.AsyncTask
+import android.support.constraint.ConstraintLayout
 import android.util.Log
-import it.LaVocedelBrunoFranchetti.rssreader.R.id.listView
+import it.LaVocedelBrunoFranchetti.rssreader.R.layout.content_main
+import kotlinx.android.synthetic.main.content_main.view.*
 import org.w3c.dom.Element
 import java.io.BufferedInputStream
 import java.net.HttpURLConnection
@@ -17,7 +19,7 @@ class ParseFeed : AsyncTask<Void, Void, ArrayList<Model>>() {
     private val modelList = ArrayList<Model>()
     lateinit private var mContext: Context
 
-    fun contextHelper (context: Context) {
+    fun contextHelper(context: Context) {
         mContext = context
     }
 
@@ -68,6 +70,7 @@ class ParseFeed : AsyncTask<Void, Void, ArrayList<Model>>() {
 
     override fun onPreExecute() {
         super.onPreExecute()
+        constraintLayout?
     }
 
     override fun onPostExecute(modelList: ArrayList<Model>) {
@@ -78,5 +81,9 @@ class ParseFeed : AsyncTask<Void, Void, ArrayList<Model>>() {
 
     override fun onProgressUpdate(vararg values: Void?) {
         super.onProgressUpdate(*values)
+    }
+
+    override fun onCreateView() {
+        val constraintLayout: ConstraintLayout = content_main
     }
 }

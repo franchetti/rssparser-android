@@ -105,6 +105,7 @@ class ArticleView : Activity() {
             i.putExtra(Intent.EXTRA_EMAIL, arrayOf("giornalino@istitutobrunofranchetti.gov.it"))
             i.putExtra(Intent.EXTRA_SUBJECT, "Proposta di un articolo da *inserisci il tuo nome e classe*")
             i.putExtra(Intent.EXTRA_TEXT, "Salve, questa mail è stata generata dall'app del Giornalino d'Istituto, allego l'articolo che / argomento che vorrei fosse trattato in un prossimo articolo:")
+
             try {
                 startActivity(Intent.createChooser(i, "Scegli come inviarlo:"))
             } catch (ex: android.content.ActivityNotFoundException) {

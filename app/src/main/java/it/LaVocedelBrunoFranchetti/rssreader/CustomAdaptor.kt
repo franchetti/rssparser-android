@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.StrictMode
 import android.support.constraint.ConstraintLayout
+import android.support.v4.content.ContextCompat.startActivity
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -48,6 +49,7 @@ class CustomAdaptor internal constructor(private val context: Context, private v
 
         val model = modelList[i]
 
+        val title = model.title
         val date = model.date
         val creator = model.creator
         val description = model.description
@@ -61,9 +63,7 @@ class CustomAdaptor internal constructor(private val context: Context, private v
 
         rootView.setOnClickListener {
             val link = model.link
-            val title = model.title
-            val creator = model.creator
-            val intent = Intent(context, webb::class.java)
+            val intent = Intent(context, ArticleView::class.java)
             intent.putExtra("link", link)
             intent.putExtra("title", title)
             intent.putExtra("creator", creator)
