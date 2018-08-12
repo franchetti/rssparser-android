@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.AsyncTask
 import android.support.constraint.ConstraintLayout
 import android.util.Log
+import android.widget.ProgressBar
 import it.LaVocedelBrunoFranchetti.rssreader.R.layout.content_main
 import kotlinx.android.synthetic.main.content_main.view.*
 import org.w3c.dom.Element
@@ -18,12 +19,7 @@ import javax.xml.parsers.DocumentBuilderFactory
 class ParseFeed : AsyncTask<Void, Void, ArrayList<Model>>() {
     private val TAG: String = "AsyncTask"
     private val modelList = ArrayList<Model>()
-    lateinit private var mContext: Context
-
-    fun contextHelper(context: Context) {
-        mContext = context
-    }
-    private val progressDialog: ProgressDialog = ProgressDialog(mContext)
+    private val edit_text = ProgressBar
 
 
     override fun doInBackground(vararg params: Void?): ArrayList<Model> {
@@ -64,7 +60,7 @@ class ParseFeed : AsyncTask<Void, Void, ArrayList<Model>>() {
             model.creator = creator
             model.description = description
             modelList.add(model)
-            progressDialog.progress = i
+            publishProgress()
         }
         Log.d(TAG, "Parsed all the articles correctly.")
         // TODO: Work here.
@@ -73,18 +69,17 @@ class ParseFeed : AsyncTask<Void, Void, ArrayList<Model>>() {
 
     override fun onPreExecute() {
         super.onPreExecute()
-        progressDialog.max = 50
-        progressDialog.show()
     }
 
     override fun onPostExecute(modelList: ArrayList<Model>) {
         super.onPostExecute(modelList)
+        // TODO: start activity to inflate the layout with modelList.
         val adapter = CustomAdaptor(mContext, modelList)
         // adapter.getView()
-        progressDialog.dismiss()
     }
 
-    override fun onProgressUpdate(vararg values: Void?) {
+    override fun onProgressUpdate(vararg values: Int?) {
         super.onProgressUpdate(*values)
+        progressBar.setProgress(values[0])
     }
 }
