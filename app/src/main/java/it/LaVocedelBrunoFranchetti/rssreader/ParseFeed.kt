@@ -1,13 +1,7 @@
 package it.LaVocedelBrunoFranchetti.rssreader
 
-import android.app.ProgressDialog
-import android.content.Context
 import android.os.AsyncTask
-import android.support.constraint.ConstraintLayout
 import android.util.Log
-import android.widget.ProgressBar
-import it.LaVocedelBrunoFranchetti.rssreader.R.layout.content_main
-import kotlinx.android.synthetic.main.content_main.view.*
 import org.w3c.dom.Element
 import java.io.BufferedInputStream
 import java.net.HttpURLConnection
@@ -15,11 +9,9 @@ import java.net.URL
 import java.util.*
 import javax.xml.parsers.DocumentBuilderFactory
 
-
 class ParseFeed : AsyncTask<Void, Void, ArrayList<Model>>() {
     private val TAG: String = "AsyncTask"
     private val modelList = ArrayList<Model>()
-
 
     override fun doInBackground(vararg params: Void?): ArrayList<Model> {
         val rssLink = "http://istitutobrunofranchetti.gov.it/giornalino/feed/"
@@ -52,7 +44,7 @@ class ParseFeed : AsyncTask<Void, Void, ArrayList<Model>>() {
             /* TODO: add interaction with category and comments.
             val comment = nodeListComment.item(i).firstChild.nodeValue
             val category = nodeListCategory.item(i).firstChild.nodeValue */
-            
+
             model.title = title
             model.link = link
             model.date = date
@@ -74,5 +66,6 @@ class ParseFeed : AsyncTask<Void, Void, ArrayList<Model>>() {
     override fun onPostExecute(modelList: ArrayList<Model>) {
         super.onPostExecute(modelList)
         // TODO: start activity to inflate the layout with modelList.
+        CustomAdaptor()
     }
 }
