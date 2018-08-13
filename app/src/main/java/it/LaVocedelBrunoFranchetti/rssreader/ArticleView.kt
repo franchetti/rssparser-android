@@ -47,20 +47,20 @@ class ArticleView : Activity() {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 */
-        val art = findViewById(R.id.art) as TextView
+        val art = findViewById<TextView>(R.id.art)
         art.text = divs
 
-        val titlein = findViewById(R.id.titlein) as TextView
+        val titlein = findViewById<TextView>(R.id.titlein)
         titlein.text = title
 
-        val creatorin = findViewById(R.id.creatorin) as TextView
+        val creatorin = findViewById<TextView>(R.id.creatorin)
         creatorin.text = "di $creator"
 
-        val imageView = findViewById(R.id.iw) as ImageView
+        val imageView = findViewById<ImageView>(R.id.iw)
         var url: URL? = null
 
         try {
-            val image = document!!.select("img.alignright, img.alignleft, img.aligncenter, .size-full").first()
+            val image = document.select("img.alignright, img.alignleft, img.aligncenter, .size-full").first()
             val imgurl = image.absUrl("src")
             try {
                 url = URL(imgurl)
@@ -82,7 +82,7 @@ class ArticleView : Activity() {
             Toast.makeText(this, text + link, Toast.LENGTH_LONG).show()
         }
 
-        val view = findViewById(R.id.view) as Button
+        val view = findViewById<Button>(R.id.view)
         view.setOnClickListener {
             setContentView(R.layout.webview)
             webView = webview as WebView
@@ -90,7 +90,7 @@ class ArticleView : Activity() {
             webView!!.settings.builtInZoomControls = true
             webView!!.loadUrl(link)
         }
-        val share = findViewById(R.id.share) as Button
+        val share = findViewById<Button>(R.id.share)
         share.setOnClickListener {
             val sharingIntent = Intent(android.content.Intent.ACTION_SEND)
             sharingIntent.type = "text/plain"
@@ -98,7 +98,7 @@ class ArticleView : Activity() {
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody)
             startActivity(Intent.createChooser(sharingIntent, "Condividi tramite:"))
         }
-        val send = findViewById(R.id.send) as Button
+        val send = findViewById<Button>(R.id.send)
         send.setOnClickListener {
             val i = Intent(Intent.ACTION_SEND)
             i.type = "message/rfc822"

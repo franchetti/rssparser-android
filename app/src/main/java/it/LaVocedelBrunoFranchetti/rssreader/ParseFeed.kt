@@ -3,6 +3,8 @@ package it.LaVocedelBrunoFranchetti.rssreader
 import android.content.Context
 import android.os.AsyncTask
 import android.util.Log
+import android.widget.ListView
+import it.LaVocedelBrunoFranchetti.rssreader.R.id.listView
 import org.w3c.dom.Element
 import java.io.BufferedInputStream
 import java.lang.ref.WeakReference
@@ -70,6 +72,6 @@ class ParseFeed(context: Context) : AsyncTask<Void, Void, ArrayList<Model>>() {
         super.onPostExecute(modelList)
         // TODO: start activity to inflate the layout with modelList.
         val adapter = CustomAdaptor(contexto.get()!!, modelList)
-
+        (listView as ListView).adapter = adapter
     }
 }
