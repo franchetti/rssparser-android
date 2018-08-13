@@ -1,8 +1,11 @@
 package it.LaVocedelBrunoFranchetti.rssreader
 
+import android.app.Activity
 import android.content.Context
 import android.os.AsyncTask
+import android.support.annotation.IdRes
 import android.util.Log
+import android.view.View
 import android.widget.ListView
 import it.LaVocedelBrunoFranchetti.rssreader.R.id.listView
 import org.w3c.dom.Element
@@ -12,6 +15,8 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.util.*
 import javax.xml.parsers.DocumentBuilderFactory
+import it.LaVocedelBrunoFranchetti.rssreader.R.layout.activity_main
+import kotlinx.android.synthetic.main.content_main.*
 
 class ParseFeed(context: Context) : AsyncTask<Void, Void, ArrayList<Model>>() {
     private val TAG: String = "AsyncTask"
@@ -71,7 +76,6 @@ class ParseFeed(context: Context) : AsyncTask<Void, Void, ArrayList<Model>>() {
     override fun onPostExecute(modelList: ArrayList<Model>) {
         super.onPostExecute(modelList)
         // TODO: start activity to inflate the layout with modelList.
-        val adapter = CustomAdaptor(contexto.get()!!, modelList)
-        (listView as ListView).adapter = adapter
+        bindt(R.id.listView).adapter = CustomAdaptor(contexto.get()!!, modelList)
     }
 }
