@@ -1,7 +1,6 @@
 package it.LaVocedelBrunoFranchetti.rssreader
 
 import android.app.Activity
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.StrictMode
@@ -11,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -69,7 +67,7 @@ class CustomAdaptor internal constructor(private val context: Context, private v
             context.startActivity(intent)
         }
 
-        rootView.setOnTouchListener { view, motionEvent -> false }*/
+        rootView.setOnTouchListener { view, motionEvent -> false }
 
         Log.d(TAG, dateandcreator)
         return rootView

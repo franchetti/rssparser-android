@@ -1,7 +1,6 @@
 package it.LaVocedelBrunoFranchetti.rssreader
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -13,9 +12,10 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import it.LaVocedelBrunoFranchetti.rssreader.R.layout.article_view
+import it.LaVocedelBrunoFranchetti.rssreader.R.layout.webview
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-
 import java.io.IOException
 import java.net.MalformedURLException
 import java.net.URL
@@ -39,8 +39,8 @@ class ArticleView : Activity() {
             e.printStackTrace()
         }
 
-        val divs = Html.fromHtml(document!!.select("div.entry-content").html().replaceAll("<img.+?>", ""))
-        setContentView(R.layout.articleview)
+        val divs = Html.fromHtml(document!!.select("div.entry-content").html().replace("<img.+?>", ""))
+        setContentView(article_view)
 
         /*        MobileAds.initialize(getApplicationContext(), "ca-app-pub-4586118376037791~8745478356");
         AdView mAdView = (AdView) this.findViewById(R.id.adViewINART);
@@ -85,7 +85,7 @@ class ArticleView : Activity() {
         val view = findViewById(R.id.view) as Button
         view.setOnClickListener {
             setContentView(R.layout.webview)
-            webView = findViewById(R.id.view) as WebView
+            webView = webview as WebView
             webView!!.settings.javaScriptEnabled = false
             webView!!.settings.builtInZoomControls = true
             webView!!.loadUrl(link)
@@ -109,7 +109,7 @@ class ArticleView : Activity() {
             try {
                 startActivity(Intent.createChooser(i, "Scegli come inviarlo:"))
             } catch (ex: android.content.ActivityNotFoundException) {
-                Toast.makeText(this@webb, "Non risulta esserci alcun client di email attualmente installato su questo dispositivo.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@ArticleView, "Non risulta esserci alcun client di email attualmente installato su questo dispositivo.", Toast.LENGTH_LONG).show()
             }
         }
 

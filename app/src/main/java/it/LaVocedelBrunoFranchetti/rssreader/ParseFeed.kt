@@ -1,17 +1,20 @@
 package it.LaVocedelBrunoFranchetti.rssreader
 
+import android.content.Context
 import android.os.AsyncTask
 import android.util.Log
 import org.w3c.dom.Element
 import java.io.BufferedInputStream
+import java.lang.ref.WeakReference
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.*
 import javax.xml.parsers.DocumentBuilderFactory
 
-class ParseFeed : AsyncTask<Void, Void, ArrayList<Model>>() {
+class ParseFeed(context: Context) : AsyncTask<Void, Void, ArrayList<Model>>() {
     private val TAG: String = "AsyncTask"
     private val modelList = ArrayList<Model>()
+    private val contexto: WeakReference<Context> = WeakReference(context)
 
     override fun doInBackground(vararg params: Void?): ArrayList<Model> {
         val rssLink = "http://istitutobrunofranchetti.gov.it/giornalino/feed/"
@@ -66,6 +69,7 @@ class ParseFeed : AsyncTask<Void, Void, ArrayList<Model>>() {
     override fun onPostExecute(modelList: ArrayList<Model>) {
         super.onPostExecute(modelList)
         // TODO: start activity to inflate the layout with modelList.
-        CustomAdaptor()
+        val adapter = CustomAdaptor(contexto.get()!!, modelList)
+
     }
 }
