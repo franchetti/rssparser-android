@@ -19,7 +19,6 @@ import javax.xml.parsers.DocumentBuilderFactory
 class ParseFeed : AsyncTask<Void, Void, ArrayList<Model>>() {
     private val TAG: String = "AsyncTask"
     private val modelList = ArrayList<Model>()
-    private val edit_text = ProgressBar
 
 
     override fun doInBackground(vararg params: Void?): ArrayList<Model> {
@@ -31,6 +30,7 @@ class ParseFeed : AsyncTask<Void, Void, ArrayList<Model>>() {
         val documentBuilder = documentBuilderFactory.newDocumentBuilder()
         val document = documentBuilder.parse(bufferedInputStream)
         val itemList = document.getElementsByTagName("item")
+        val model = Model()
 
         for (i in 0 until itemList.length) {
             val element = itemList.item(i) as Element
@@ -52,8 +52,7 @@ class ParseFeed : AsyncTask<Void, Void, ArrayList<Model>>() {
             /* TODO: add interaction with category and comments.
             val comment = nodeListComment.item(i).firstChild.nodeValue
             val category = nodeListCategory.item(i).firstChild.nodeValue */
-
-            val model = Model()
+            
             model.title = title
             model.link = link
             model.date = date
@@ -69,17 +68,11 @@ class ParseFeed : AsyncTask<Void, Void, ArrayList<Model>>() {
 
     override fun onPreExecute() {
         super.onPreExecute()
+        // TODO: create ProgressBar.
     }
 
     override fun onPostExecute(modelList: ArrayList<Model>) {
         super.onPostExecute(modelList)
         // TODO: start activity to inflate the layout with modelList.
-        val adapter = CustomAdaptor(mContext, modelList)
-        // adapter.getView()
-    }
-
-    override fun onProgressUpdate(vararg values: Int?) {
-        super.onProgressUpdate(*values)
-        progressBar.setProgress(values[0])
     }
 }
