@@ -3,25 +3,20 @@ package it.LaVocedelBrunoFranchetti.rssreader
 import android.app.Activity
 import android.content.Context
 import android.os.AsyncTask
-import android.support.annotation.IdRes
 import android.util.Log
-import android.view.View
 import android.widget.ListView
-import it.LaVocedelBrunoFranchetti.rssreader.R.id.listView
 import org.w3c.dom.Element
 import java.io.BufferedInputStream
-import java.lang.ref.WeakReference
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.*
 import javax.xml.parsers.DocumentBuilderFactory
-import it.LaVocedelBrunoFranchetti.rssreader.R.layout.activity_main
-import kotlinx.android.synthetic.main.content_main.*
 
 class ParseFeed(context: Context) : AsyncTask<Void, Void, ArrayList<Model>>() {
     private val TAG: String = "AsyncTask"
     private val modelList = ArrayList<Model>()
-    private val contexto: WeakReference<Context> = WeakReference(context)
+    // private val contexto: WeakReference<Context> = WeakReference(context)
+    private val contexto: Context = context
 
     override fun doInBackground(vararg params: Void?): ArrayList<Model> {
         val rssLink = "http://istitutobrunofranchetti.gov.it/giornalino/feed/"
@@ -76,6 +71,6 @@ class ParseFeed(context: Context) : AsyncTask<Void, Void, ArrayList<Model>>() {
     override fun onPostExecute(modelList: ArrayList<Model>) {
         super.onPostExecute(modelList)
         // TODO: start activity to inflate the layout with modelList.
-        bindt(R.id.listView).adapter = CustomAdaptor(contexto.get()!!, modelList)
+        (contexto as Activity).findViewById<ListView>(R.id.listView).adapter = CustomAdaptor(contexto, modelList)
     }
 }

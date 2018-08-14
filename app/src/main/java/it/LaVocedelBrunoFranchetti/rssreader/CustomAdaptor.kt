@@ -18,16 +18,11 @@ import java.util.*
 class CustomAdaptor internal constructor(private val context: Context, private val modelList: ArrayList<Model>) : BaseAdapter() {
 
     private var policy: StrictMode.ThreadPolicy = StrictMode.ThreadPolicy.Builder().permitAll().build()
-    private val holder = ViewHolder()
     private val rootView = (context as Activity).layoutInflater.inflate(R.layout.custom_list, null) as ConstraintLayout
     private val TAG = "CustomAdaptor"
 
-    init {
-        holder.dateandcreator = rootView.findViewById(R.id.date_and_creator) as TextView
-        holder.dateandcreator = rootView.findViewById(R.id.date_and_creator) as TextView
-        holder.dateandcreator = rootView.findViewById(R.id.date_and_creator) as TextView
-        rootView.tag = holder
-    }
+    private val date_and_creatorTW = rootView.findViewById(R.id.date_and_creator) as TextView
+    private val titleTW = rootView.findViewById(R.id.title) as TextView
 
     override fun getCount(): Int {
         return modelList.size
@@ -41,22 +36,18 @@ class CustomAdaptor internal constructor(private val context: Context, private v
         return 0
     }
 
-    override fun getView(i: Int, view: View, viewGroup: ViewGroup): View {
+    override fun getView(i: Int, view: View?, viewGroup: ViewGroup): View {
         StrictMode.setThreadPolicy(policy)
 
         val model = modelList[i]
-
         val title = model.title
-        val date = model.date
         val creator = model.creator
         val description = model.description
+        val date = Date(model.date)
+        val dateandcreator: String = (String.format("%02d:%02d", date.hours, date.minutes) + "   |   " + SimpleDateFormat("%02d:%02d | dd.MM.yyyy", Locale.getDefault()).format(date) + "   |   " + model.creator)
 
-        val dateFormat = SimpleDateFormat("%02d:%02d | dd.MM.yyyy", Locale.getDefault())
-        val dateandcreator: String = dateFormat.parse(date).toString() + "   |   " + creator
-
-        holder.title!!.text = model.title
-        holder.dateandcreator!!.text = dateandcreator
-        holder.description!!.text = description.toString()
+        date_and_creatorTW.text = dateandcreator
+        titleTW.text = title
 
         rootView.setOnClickListener {
             val link = model.link
@@ -67,7 +58,7 @@ class CustomAdaptor internal constructor(private val context: Context, private v
             context.startActivity(intent)
         }
 
-        rootView.setOnTouchListener { view, motionEvent -> false }
+        // rootView.setOnTouchListener { view, motionEvent -> false }
 
         Log.d(TAG, dateandcreator)
         return rootView
