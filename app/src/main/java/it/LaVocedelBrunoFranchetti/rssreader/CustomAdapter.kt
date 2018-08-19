@@ -14,9 +14,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-
 class CustomAdapter internal constructor(private val context: Context, private val modelList: ArrayList<Model>) : BaseAdapter() {
-
     private var policy: StrictMode.ThreadPolicy = StrictMode.ThreadPolicy.Builder().permitAll().build()
     private val TAG = "CustomAdaptor"
 
@@ -34,15 +32,16 @@ class CustomAdapter internal constructor(private val context: Context, private v
 
     override fun getView(i: Int, view: View?, viewGroup: ViewGroup): View {
         StrictMode.setThreadPolicy(policy)
-        val rootView = (context as Activity).layoutInflater.inflate(R.layout.custom_list, null) as ConstraintLayout
+        val rootView: ConstraintLayout = (context as Activity).layoutInflater.inflate(R.layout.custom_list, null) as ConstraintLayout
 
-        val date_and_creator = rootView.findViewById(R.id.date_and_creator) as TextView
-        val title = rootView.findViewById(R.id.title) as TextView
+        val date_and_creator: TextView = rootView.findViewById(R.id.date_and_creator) as TextView
+        val title: TextView = rootView.findViewById(R.id.title) as TextView
 
-        val model = modelList[i]
-        val creator = model.creator
-        val description = model.description
-        val date = Date(model.date)
+        val model: Model = modelList[i]
+
+        val creator: String? = model.creator
+        val description: String? = model.description
+        val date: Date = Date(model.date)
         val dateandcreator: String = (String.format("%02d:%02d", date.hours, date.minutes) + "   |   " + SimpleDateFormat("%02d:%02d | dd.MM.yyyy", Locale.getDefault()).format(date) + "   |   " + model.creator)
 
         date_and_creator.text = dateandcreator

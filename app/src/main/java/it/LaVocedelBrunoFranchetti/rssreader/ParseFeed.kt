@@ -9,12 +9,11 @@ import org.w3c.dom.Element
 import java.io.BufferedInputStream
 import java.net.HttpURLConnection
 import java.net.URL
-import java.util.*
 import javax.xml.parsers.DocumentBuilderFactory
 
 class ParseFeed(context: Context) : AsyncTask<Void, Void, ArrayList<Model>>() {
     private val TAG: String = "AsyncTask"
-    private val modelList = ArrayList<Model>()
+    val modelList = ArrayList<Model>()
     // private val contexto: WeakReference<Context> = WeakReference(context)
     private val contexto: Context = context
 
@@ -27,11 +26,15 @@ class ParseFeed(context: Context) : AsyncTask<Void, Void, ArrayList<Model>>() {
         val documentBuilder = documentBuilderFactory.newDocumentBuilder()
         val document = documentBuilder.parse(bufferedInputStream)
         val itemList = document.getElementsByTagName("item")
-        val model = Model()
 
         for (i in 0 until itemList.length) {
+            // Declare new model storage.
+            val model = Model()
+
+            // Get element of RSS stream.
             val element = itemList.item(i) as Element
 
+            // Define elements of Model.
             val nodeListTitle = element.getElementsByTagName("title")
             val nodeListLink = element.getElementsByTagName("link")
             val nodeListDate = element.getElementsByTagName("pubDate")
@@ -47,19 +50,20 @@ class ParseFeed(context: Context) : AsyncTask<Void, Void, ArrayList<Model>>() {
             val creator = nodeListCreator.item(0).firstChild.nodeValue
             val description = nodeListDescription.item(0).firstChild.nodeValue
             /* TODO: add interaction with category and comments.
-            val comment = nodeListComment.item(i).firstChild.nodeValue
-            val category = nodeListCategory.item(i).firstChild.nodeValue */
+            val comment = nodeListComment.item(0).firstChild.nodeValue
+            val category = nodeListCategory.item(0).firstChild.nodeValue */
 
+            // Define local Model() to be added into ArrayList.
             model.title = title
             model.link = link
             model.date = date
             model.creator = creator
             model.description = description
+
+            // Add Model() instance to modelList ArrayList.
             modelList.add(model)
-            publishProgress()
         }
-        Log.d(TAG, "Parsed all the articles correctly.")
-        // TODO: Work here.
+        Log.d(TAG, "Parsed all the ${itemList.length} articles correctly.")
         return modelList
     }
 
@@ -70,7 +74,6 @@ class ParseFeed(context: Context) : AsyncTask<Void, Void, ArrayList<Model>>() {
 
     override fun onPostExecute(modelList: ArrayList<Model>) {
         super.onPostExecute(modelList)
-        // TODO: start activity to inflate the layout with modelList.
         (contexto as Activity).findViewById<ListView>(R.id.listView).adapter = CustomAdapter(contexto, modelList)
     }
 }
