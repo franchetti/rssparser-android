@@ -15,14 +15,10 @@ import java.util.*
 
 
 
-class CustomAdaptor internal constructor(private val context: Context, private val modelList: ArrayList<Model>) : BaseAdapter() {
+class CustomAdapter internal constructor(private val context: Context, private val modelList: ArrayList<Model>) : BaseAdapter() {
 
     private var policy: StrictMode.ThreadPolicy = StrictMode.ThreadPolicy.Builder().permitAll().build()
-    private val rootView = (context as Activity).layoutInflater.inflate(R.layout.custom_list, null) as ConstraintLayout
     private val TAG = "CustomAdaptor"
-
-    private val date_and_creatorTW = rootView.findViewById(R.id.date_and_creator) as TextView
-    private val titleTW = rootView.findViewById(R.id.title) as TextView
 
     override fun getCount(): Int {
         return modelList.size
@@ -33,34 +29,37 @@ class CustomAdaptor internal constructor(private val context: Context, private v
     }
 
     override fun getItemId(i: Int): Long {
-        return 0
+        return getItem(i).hashCode().toLong()
     }
 
     override fun getView(i: Int, view: View?, viewGroup: ViewGroup): View {
         StrictMode.setThreadPolicy(policy)
+        val rootView = (context as Activity).layoutInflater.inflate(R.layout.custom_list, null) as ConstraintLayout
+
+        val date_and_creator = rootView.findViewById(R.id.date_and_creator) as TextView
+        val title = rootView.findViewById(R.id.title) as TextView
 
         val model = modelList[i]
-        val title = model.title
         val creator = model.creator
         val description = model.description
         val date = Date(model.date)
         val dateandcreator: String = (String.format("%02d:%02d", date.hours, date.minutes) + "   |   " + SimpleDateFormat("%02d:%02d | dd.MM.yyyy", Locale.getDefault()).format(date) + "   |   " + model.creator)
 
-        date_and_creatorTW.text = dateandcreator
-        titleTW.text = title
+        date_and_creator.text = dateandcreator
+        title.text = model.title
 
         rootView.setOnClickListener {
             val link = model.link
             val intent = Intent(context, ArticleView::class.java)
             intent.putExtra("link", link)
-            intent.putExtra("title", title)
+            intent.putExtra("title", model.title)
             intent.putExtra("creator", creator)
             context.startActivity(intent)
         }
 
         // rootView.setOnTouchListener { view, motionEvent -> false }
 
-        Log.d(TAG, dateandcreator)
+        Log.d(TAG, model.title)
         return rootView
     }
 }

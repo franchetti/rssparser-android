@@ -71,6 +71,6 @@ class ParseFeed(context: Context) : AsyncTask<Void, Void, ArrayList<Model>>() {
     override fun onPostExecute(modelList: ArrayList<Model>) {
         super.onPostExecute(modelList)
         // TODO: start activity to inflate the layout with modelList.
-        (contexto as Activity).findViewById<ListView>(R.id.listView).adapter = CustomAdaptor(contexto, modelList)
+        (contexto as Activity).findViewById<ListView>(R.id.listView).adapter = CustomAdapter(contexto, modelList)
     }
 }
