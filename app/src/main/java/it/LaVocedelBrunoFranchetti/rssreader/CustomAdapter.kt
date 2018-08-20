@@ -50,12 +50,12 @@ class CustomAdapter internal constructor(private val context: Context, private v
         description.text = model.description
 
         rootView.setOnClickListener {
-                val link = model.link
-                val intent = Intent(context, ArticleView::class.java)
-                intent.putExtra("link", link)
-                intent.putExtra("title", model.title)
-                intent.putExtra("creator", creator)
-                context.startActivity(intent)
+            val link = model.link
+            val intent = Intent(context, ArticleView::class.java)
+            intent.putExtra("link", link)
+            intent.putExtra("title", model.title)
+            intent.putExtra("creator", creator)
+            context.startActivity(intent)
         }
 
         // rootView.setOnTouchListener { view, motionEvent -> false }

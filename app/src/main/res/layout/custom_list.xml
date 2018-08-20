@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_centerVertical="true"
-    android:paddingBottom="@dimen/nav_header_vertical_spacing"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:paddingBottom="@dimen/nav_header_vertical_spacing">
 
     <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/textColorSecondary"
         app:cardCornerRadius="@dimen/cardview_radius"
         app:cardElevation="@dimen/nav_header_vertical_spacing"
         app:contentPaddingBottom="7dp"
-        app:contentPaddingRight="10dp"
         app:contentPaddingLeft="5dp"
-        app:contentPaddingTop="7dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        app:contentPaddingRight="10dp"
+        app:contentPaddingTop="7dp">
 
         <LinearLayout
             android:layout_width="match_parent"

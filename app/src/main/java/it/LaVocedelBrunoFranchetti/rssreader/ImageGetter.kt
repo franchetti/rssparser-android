@@ -7,7 +7,7 @@ import android.text.Html
 import java.io.IOException
 import java.net.URL
 
-class ImageGetter: Html.ImageGetter {
+class ImageGetter : Html.ImageGetter {
     override fun getDrawable(source: String): Drawable? {
         val bmp: BitmapDrawable
         return try {
