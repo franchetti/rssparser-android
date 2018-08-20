@@ -41,7 +41,8 @@ class CustomAdapter internal constructor(private val context: Context, private v
         val model: Model = modelList[i]
 
         val creator: String? = model.creator
-        val date: Date = Date(model.date)
+        // TODO: Remove usage of deprecated Java.Date, using Java.Time.
+        val date = Date(model.date)
         val dateandcreator: String = (String.format("%02d:%02d", date.hours, date.minutes) + "   |   " + SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(date) + "   |   " + model.creator)
 
         date_and_creator.text = dateandcreator
@@ -49,12 +50,12 @@ class CustomAdapter internal constructor(private val context: Context, private v
         description.text = model.description
 
         rootView.setOnClickListener {
-            val link = model.link
-            val intent = Intent(context, ArticleView::class.java)
-            intent.putExtra("link", link)
-            intent.putExtra("title", model.title)
-            intent.putExtra("creator", creator)
-            context.startActivity(intent)
+                val link = model.link
+                val intent = Intent(context, ArticleView::class.java)
+                intent.putExtra("link", link)
+                intent.putExtra("title", model.title)
+                intent.putExtra("creator", creator)
+                context.startActivity(intent)
         }
 
         // rootView.setOnTouchListener { view, motionEvent -> false }
