@@ -19,7 +19,7 @@ buildscript {
 
 android {
     compileSdkVersion 28
-    buildToolsVersion '28.0.1'
+    buildToolsVersion "28.0.1"
     lintOptions {
         abortOnError false
     }
