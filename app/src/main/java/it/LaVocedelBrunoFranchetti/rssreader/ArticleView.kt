@@ -18,11 +18,15 @@ import org.jsoup.nodes.Document
 import java.io.IOException
 
 class ArticleView : Activity() {
-    internal var policy: StrictMode.ThreadPolicy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+    private var policy: StrictMode.ThreadPolicy = StrictMode.ThreadPolicy.Builder().permitAll().build()
     private var webView: WebView? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(article_view)
+
+        // TODO: Add ProgressDialog to this activity.
+
         val link = intent.getStringExtra("link")
         StrictMode.setThreadPolicy(policy)
         var document: Document? = null
@@ -36,7 +40,6 @@ class ArticleView : Activity() {
 
         document!!.getElementsByClass("single-line-meta").remove()
         val divs: Spanned = Html.fromHtml(document.getElementsByTag("p").html(), ImageGetter(), null)
-        setContentView(article_view)
 
         findViewById<TextView>(R.id.titlein).text = intent.getStringExtra("title")
         findViewById<TextView>(R.id.creatorin).text = "di " + intent.getStringExtra("creator")
@@ -44,6 +47,7 @@ class ArticleView : Activity() {
         val art = findViewById<TextView>(R.id.art)
         art.text = divs
 
+        // TODO: Setup buttons at the end of article_view.
         // Work with the buttons at the end of the article.
         val view = findViewById<Button>(R.id.view)
         view.setOnClickListener {
