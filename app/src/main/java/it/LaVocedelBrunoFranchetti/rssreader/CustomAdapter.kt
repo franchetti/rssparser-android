@@ -42,7 +42,7 @@ class CustomAdapter internal constructor(private val context: Context, private v
         val creator: String? = model.creator
         val description: String? = model.description
         val date: Date = Date(model.date)
-        val dateandcreator: String = (String.format("%02d:%02d", date.hours, date.minutes) + "   |   " + SimpleDateFormat("%02d:%02d | dd.MM.yyyy", Locale.getDefault()).format(date) + "   |   " + model.creator)
+        val dateandcreator: String = (String.format("%02d:%02d", date.hours, date.minutes) + "   |   " + SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(date) + "   |   " + model.creator)
 
         date_and_creator.text = dateandcreator
         title.text = model.title
