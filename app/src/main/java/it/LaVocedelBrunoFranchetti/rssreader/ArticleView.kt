@@ -2,9 +2,6 @@ package it.LaVocedelBrunoFranchetti.rssreader
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.StrictMode
 import android.text.Html
@@ -18,7 +15,6 @@ import it.LaVocedelBrunoFranchetti.rssreader.R.layout.webview
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import java.io.IOException
-import java.net.URL
 
 class ArticleView : Activity() {
     internal var policy: StrictMode.ThreadPolicy = StrictMode.ThreadPolicy.Builder().permitAll().build()
@@ -27,8 +23,6 @@ class ArticleView : Activity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val link = intent.getStringExtra("link")
-        val title = intent.getStringExtra("title")
-        val creator = intent.getStringExtra("creator")
         StrictMode.setThreadPolicy(policy)
         var document: Document? = null
 
@@ -41,6 +35,9 @@ class ArticleView : Activity() {
         document!!.getElementsByClass("single-line-meta").remove()
         val divs: Spanned = Html.fromHtml(document.getElementsByTag("p").html(), ImageGetter(), null)
         setContentView(article_view)
+
+        findViewById<TextView>(R.id.titlein).text = intent.getStringExtra("title")
+        findViewById<TextView>(R.id.creatorin).text = intent.getStringExtra("creator")
 
         val art = findViewById<TextView>(R.id.art)
         art.text = divs
@@ -59,7 +56,7 @@ class ArticleView : Activity() {
         share.setOnClickListener {
             val sharingIntent = Intent(android.content.Intent.ACTION_SEND)
             sharingIntent.type = "text/plain"
-            val shareBody = "$title di $creator $link"
+            val shareBody = "$title di " + intent.getStringExtra("title") + " " + intent.getStringExtra("link")
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody)
             startActivity(Intent.createChooser(sharingIntent, "Condividi tramite:"))
         }
@@ -77,20 +74,6 @@ class ArticleView : Activity() {
             } catch (ex: android.content.ActivityNotFoundException) {
                 Toast.makeText(this@ArticleView, "Non risulta esserci alcun client di email attualmente installato su questo dispositivo.", Toast.LENGTH_LONG).show()
             }
-        }
-    }
-}
-
-private class ImageGetter: Html.ImageGetter {
-    override fun getDrawable(source: String): Drawable? {
-        val bmp: BitmapDrawable
-        return try {
-            bmp = BitmapDrawable(BitmapFactory.decodeStream(URL(source).openConnection().getInputStream()))
-            bmp.setBounds(0, 0, bmp.intrinsicWidth, bmp.intrinsicHeight)
-            bmp
-        } catch (e: IOException) {
-            e.printStackTrace()
-            null
         }
     }
 }
