@@ -17,13 +17,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        val task = ParseFeed(this)
+        task.execute()
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
-            System.out.println("TaSTO")
-            val task = ParseFeed(this)
-            println(task.execute())
         }
 
         val toggle = ActionBarDrawerToggle(

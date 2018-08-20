@@ -42,19 +42,15 @@ class ArticleView : Activity() {
         val divs = Html.fromHtml(document!!.select("div.entry-content").html().replace("<img.+?>", ""))
         setContentView(article_view)
 
-        /*        MobileAds.initialize(getApplicationContext(), "ca-app-pub-4586118376037791~8745478356");
-        AdView mAdView = (AdView) this.findViewById(R.id.adViewINART);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-*/
         val art = findViewById<TextView>(R.id.art)
         art.text = divs
-
+ /*
         val titlein = findViewById<TextView>(R.id.titlein)
         titlein.text = title
 
         val creatorin = findViewById<TextView>(R.id.creatorin)
         creatorin.text = "di $creator"
+        */
 
         val imageView = findViewById<ImageView>(R.id.iw)
         var url: URL? = null
