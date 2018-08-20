@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.StrictMode
 import android.text.Html
 import android.text.Spanned
+import android.view.View
 import android.webkit.WebView
 import android.widget.Button
 import android.widget.TextView
@@ -25,6 +26,7 @@ class ArticleView : Activity() {
         val link = intent.getStringExtra("link")
         StrictMode.setThreadPolicy(policy)
         var document: Document? = null
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 
         try {
             document = Jsoup.connect(link).userAgent("Mozilla").get()
@@ -37,7 +39,7 @@ class ArticleView : Activity() {
         setContentView(article_view)
 
         findViewById<TextView>(R.id.titlein).text = intent.getStringExtra("title")
-        findViewById<TextView>(R.id.creatorin).text = intent.getStringExtra("creator")
+        findViewById<TextView>(R.id.creatorin).text = "di " + intent.getStringExtra("creator")
 
         val art = findViewById<TextView>(R.id.art)
         art.text = divs

@@ -16,18 +16,23 @@
                 android:id="@+id/titlein"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp"
+                android:paddingTop="7dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#000"
-                android:textSize="22sp" />
+                android:textColor="@color/textColorPrimary"
+                android:textSize="42sp" />
 
             <TextView
                 android:id="@+id/creatorin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp"
+                android:paddingTop="7dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#000"
-                android:textSize="20sp" />
+                android:textColor="@color/textColorPrimary"
+                android:textSize="34sp" />
 
             <ImageView
                 android:id="@+id/iw"
