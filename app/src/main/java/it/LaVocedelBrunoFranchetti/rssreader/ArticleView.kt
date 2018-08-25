@@ -23,63 +23,64 @@ class ArticleView : Activity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        StrictMode.setThreadPolicy(policy)
         setContentView(article_view)
 
         // TODO: Add ProgressDialog to this activity.
 
         val link = intent.getStringExtra("link")
-        StrictMode.setThreadPolicy(policy)
-        var document: Document? = null
+        val title = intent.getStringExtra("title")
+        val creator = intent.getStringExtra("creator")
+
+
+        val document: Document
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 
         try {
             document = Jsoup.connect(link).userAgent("Mozilla").get()
+            document.getElementsByClass("single-line-meta").remove()
+
+            val divs: Spanned = Html.fromHtml(document.getElementsByTag("p").html(), ImageGetter(), null)
+
+            findViewById<TextView>(R.id.titlein).text = title
+            findViewById<TextView>(R.id.creatorin).text = "di $creator"
+            findViewById<TextView>(R.id.art).text = divs
+
+            // TODO: Setup buttons at the end of article_view.
+            // Work with the buttons at the end of the article.
+            val view = findViewById<Button>(R.id.view)
+            view.setOnClickListener {
+                setContentView(R.layout.webview)
+                webView = webview as WebView
+                webView!!.settings.javaScriptEnabled = false
+                webView!!.settings.builtInZoomControls = true
+                webView!!.loadUrl(link)
+            }
+
+            val share = findViewById<Button>(R.id.share)
+            share.setOnClickListener {
+                val sharingIntent = Intent(android.content.Intent.ACTION_SEND)
+                sharingIntent.type = "text/plain"
+                val shareBody = "$title di $creator\n$link"
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody)
+                startActivity(Intent.createChooser(sharingIntent, "Condividi tramite:"))
+            }
+
+            val send = findViewById<Button>(R.id.send)
+            send.setOnClickListener {
+                val i = Intent(Intent.ACTION_SEND)
+                i.type = "message/rfc822"
+                i.putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.org_email)))
+                i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_object))
+                i.putExtra(Intent.EXTRA_TEXT, getString(R.string.email_text))
+                try {
+                    startActivity(Intent.createChooser(i, getString(R.string.share_select)))
+                } catch (ex: android.content.ActivityNotFoundException) {
+                    Toast.makeText(this@ArticleView, getString(R.string.error_noclient), Toast.LENGTH_LONG).show()
+                }
+            }
         } catch (e: IOException) {
             e.printStackTrace()
-        }
-
-        document!!.getElementsByClass("single-line-meta").remove()
-        val divs: Spanned = Html.fromHtml(document.getElementsByTag("p").html(), ImageGetter(), null)
-
-        findViewById<TextView>(R.id.titlein).text = intent.getStringExtra("title")
-        findViewById<TextView>(R.id.creatorin).text = "di " + intent.getStringExtra("creator")
-
-        val art = findViewById<TextView>(R.id.art)
-        art.text = divs
-
-        // TODO: Setup buttons at the end of article_view.
-        // Work with the buttons at the end of the article.
-        val view = findViewById<Button>(R.id.view)
-        view.setOnClickListener {
-            setContentView(R.layout.webview)
-            webView = webview as WebView
-            webView!!.settings.javaScriptEnabled = false
-            webView!!.settings.builtInZoomControls = true
-            webView!!.loadUrl(link)
-        }
-
-        val share = findViewById<Button>(R.id.share)
-        share.setOnClickListener {
-            val sharingIntent = Intent(android.content.Intent.ACTION_SEND)
-            sharingIntent.type = "text/plain"
-            val shareBody = "$title di " + intent.getStringExtra("title") + " " + intent.getStringExtra("link")
-            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody)
-            startActivity(Intent.createChooser(sharingIntent, "Condividi tramite:"))
-        }
-
-        val send = findViewById<Button>(R.id.send)
-        send.setOnClickListener {
-            val i = Intent(Intent.ACTION_SEND)
-            i.type = "message/rfc822"
-            i.putExtra(Intent.EXTRA_EMAIL, arrayOf("giornalino@istitutobrunofranchetti.gov.it"))
-            i.putExtra(Intent.EXTRA_SUBJECT, "Proposta di un articolo da *inserisci il tuo nome e classe*")
-            i.putExtra(Intent.EXTRA_TEXT, "Salve, questa mail è stata generata dall'app del Giornalino d'Istituto, allego l'articolo che / argomento che vorrei fosse trattato in un prossimo articolo:")
-
-            try {
-                startActivity(Intent.createChooser(i, "Scegli come inviarlo:"))
-            } catch (ex: android.content.ActivityNotFoundException) {
-                Toast.makeText(this@ArticleView, "Non risulta esserci alcun client di email attualmente installato su questo dispositivo.", Toast.LENGTH_LONG).show()
-            }
         }
     }
 }
