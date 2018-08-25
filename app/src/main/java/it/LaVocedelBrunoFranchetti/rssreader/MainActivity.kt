@@ -1,5 +1,6 @@
 package it.LaVocedelBrunoFranchetti.rssreader
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
@@ -52,7 +53,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
-            R.id.action_settings -> return true
+            R.id.action_settings -> {
+                val intent = Intent(this, SettingsActivity::class.java)
+                this.startActivity(intent)
+                return true
+            }
             else -> return super.onOptionsItemSelected(item)
         }
     }
