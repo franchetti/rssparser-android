@@ -56,20 +56,20 @@ class ArticleView : Activity() {
             val share = findViewById<Button>(R.id.share)
             share.setOnClickListener {
                 val sharingIntent = Intent(android.content.Intent.ACTION_SEND)
+                val shareBody = title + getString(R.string.article_author_linker) + creator + "\n" + link
                 sharingIntent.type = "text/plain"
-                val shareBody = "$title di $creator\n$link"
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody)
                 startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_select)))
             }
 
             val send = findViewById<Button>(R.id.send)
             send.setOnClickListener {
-                val i = Intent(Intent.ACTION_SEND)
-                i.type = "message/rfc822"
-                i.putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.org_email)))
-                i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_object))
-                i.putExtra(Intent.EXTRA_TEXT, getString(R.string.email_text))
                 try {
+                    val i = Intent(Intent.ACTION_SEND)
+                    i.type = "message/rfc822"
+                    i.putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.org_email)))
+                    i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_object))
+                    i.putExtra(Intent.EXTRA_TEXT, getString(R.string.email_text))
                     startActivity(Intent.createChooser(i, getString(R.string.share_select)))
                 } catch (ex: android.content.ActivityNotFoundException) {
                     Toast.makeText(this@ArticleView, getString(R.string.error_noclient), Toast.LENGTH_LONG).show()
