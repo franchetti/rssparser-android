@@ -29,7 +29,7 @@ class ArticleView : Activity() {
 
         val link = intent.getStringExtra("link")
         val title = intent.getStringExtra("title")
-        val creator = intent.getStringExtra("creator")
+        val creator = "di " + intent.getStringExtra("creator")
         val document: Document
         val divs: Spanned
 
@@ -40,10 +40,9 @@ class ArticleView : Activity() {
             divs = Html.fromHtml(document.getElementsByTag("p").html(), ImageGetter(), null)
 
             findViewById<TextView>(R.id.titlein).text = title
-            findViewById<TextView>(R.id.creatorin).text = "di $creator"
+            findViewById<TextView>(R.id.creatorin).text = creator
             findViewById<TextView>(R.id.art).text = divs
 
-            // TODO: Setup buttons at the end of article_view.
             // Work with the buttons at the end of the article.
             val view = findViewById<Button>(R.id.view)
             view.setOnClickListener {
