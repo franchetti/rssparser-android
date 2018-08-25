@@ -12,35 +12,32 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import it.LaVocedelBrunoFranchetti.rssreader.R.layout.article_view
-import it.LaVocedelBrunoFranchetti.rssreader.R.layout.webview
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import java.io.IOException
 
 class ArticleView : Activity() {
     private var policy: StrictMode.ThreadPolicy = StrictMode.ThreadPolicy.Builder().permitAll().build()
-    private var webView: WebView? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         StrictMode.setThreadPolicy(policy)
         setContentView(article_view)
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 
         // TODO: Add ProgressDialog to this activity.
 
         val link = intent.getStringExtra("link")
         val title = intent.getStringExtra("title")
         val creator = intent.getStringExtra("creator")
-
-
         val document: Document
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+        val divs: Spanned
 
         try {
             document = Jsoup.connect(link).userAgent("Mozilla").get()
             document.getElementsByClass("single-line-meta").remove()
-
-            val divs: Spanned = Html.fromHtml(document.getElementsByTag("p").html(), ImageGetter(), null)
+            // TODO: Remove deprecated fromHtml method.
+            divs = Html.fromHtml(document.getElementsByTag("p").html(), ImageGetter(), null)
 
             findViewById<TextView>(R.id.titlein).text = title
             findViewById<TextView>(R.id.creatorin).text = "di $creator"
@@ -50,11 +47,11 @@ class ArticleView : Activity() {
             // Work with the buttons at the end of the article.
             val view = findViewById<Button>(R.id.view)
             view.setOnClickListener {
-                setContentView(R.layout.webview)
-                webView = webview as WebView
-                webView!!.settings.javaScriptEnabled = false
-                webView!!.settings.builtInZoomControls = true
-                webView!!.loadUrl(link)
+                val myWebView = WebView(applicationContext)
+                setContentView(myWebView)
+                myWebView.settings.javaScriptEnabled = false
+                myWebView.settings.builtInZoomControls = false
+                myWebView.loadUrl(link)
             }
 
             val share = findViewById<Button>(R.id.share)
@@ -63,7 +60,7 @@ class ArticleView : Activity() {
                 sharingIntent.type = "text/plain"
                 val shareBody = "$title di $creator\n$link"
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody)
-                startActivity(Intent.createChooser(sharingIntent, "Condividi tramite:"))
+                startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_select)))
             }
 
             val send = findViewById<Button>(R.id.send)
