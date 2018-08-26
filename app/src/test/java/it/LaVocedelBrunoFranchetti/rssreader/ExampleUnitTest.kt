@@ -1,5 +1,6 @@
 package it.LaVocedelBrunoFranchetti.rssreader
 
+import android.app.Activity
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -9,8 +10,11 @@ import org.junit.Test
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class ExampleUnitTest {
+    // TODO: Setup a working test.
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    fun rss_parseCorrectly() {
+        val rssLink = "http://istitutobrunofranchetti.gov.it/giornalino/feed/"
+        ParseFeed()
+        assertEquals("Giorgio", "")
     }
 }
