@@ -12,13 +12,14 @@ import java.io.BufferedInputStream
 import java.net.URL
 import javax.xml.parsers.DocumentBuilderFactory
 
-class ParseFeed(context: Context) : AsyncTask<Void, Void, ArrayList<Model>>() {
+class ParseFeed(context: Context): AsyncTask<Void, Void, ArrayList<Model>>() {
     private val tag: String = "AsyncTask"
     private val modelList = ArrayList<Model>()
     // TODO: Fix context leak.
     // private val contexto: WeakReference<Context> = WeakReference(context)
     private val contexto: Context = context
     private val toBeParsed: Int = 15
+    // TODO: Remove usage of deprecated ProgressDialog.
     private val progressDialog: ProgressDialog = ProgressDialog(contexto)
 
     override fun doInBackground(vararg params: Void?): ArrayList<Model> {
