@@ -40,7 +40,7 @@ android {
     }
     testOptions {
         // TODO: Setup test options.
-        // unitTests.returnDefaultValues = true
+        unitTests.returnDefaultValues = true
     }
 }
 
