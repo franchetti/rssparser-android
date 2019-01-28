@@ -1,6 +1,8 @@
 package it.LaVocedelBrunoFranchetti.rssreader
 
 import android.os.Bundle
+import android.text.Html
+import android.util.Log
 import android.view.*
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
@@ -9,6 +11,10 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import com.mikepenz.aboutlibraries.Libs
+import com.mikepenz.aboutlibraries.LibsBuilder
+
+
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -53,9 +59,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        when (item.itemId) {
-            R.id.action_settings -> return true
-            else -> return super.onOptionsItemSelected(item)
+        return when (item.itemId) {
+            R.id.action_settings -> true
+            R.id.action_about -> {
+                LibsBuilder()
+                        .withAboutIconShown(true)
+                        .withAboutVersionShown(true)
+                        .withAboutDescription(getString(R.string.about_text))
+                        .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
+                        .start(this)
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

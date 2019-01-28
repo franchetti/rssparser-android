@@ -12,4 +12,6 @@
     <string name="email_text">Salve, questa mail è stata generata dall\'app del Giornalino d\'Istituto, allego l\'articolo che / argomento che vorrei fosse trattato in un prossimo articolo:</string>
     <string name="share_select">Scegli come inviarlo:</string>
     <string name="error_noclient">Non risulta esserci alcun client di email attualmente installato su questo dispositivo.</string>
+    <string name="action_about">Riguardo a questa app</string>
+    <string name="about_text"><![CDATA[Client ufficiale del giornalino d\'Istituto<br /><b>©2019 - La Voce del Bruno Franchetti</b>]]></string>
 </resources>
