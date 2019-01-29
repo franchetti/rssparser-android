@@ -24,6 +24,7 @@ class ArticleView : Activity() {
     private lateinit var link: String
     private lateinit var title: String
     private lateinit var creator: String
+    private var policy: StrictMode.ThreadPolicy = StrictMode.ThreadPolicy.Builder().permitAll().build()
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,18 +32,11 @@ class ArticleView : Activity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(article_view)
 
+        link = intent.getStringExtra("link")
+        title = intent.getStringExtra("title")
+        creator = intent.getStringExtra("creator")
+
         // TODO: Add ProgressDialog to this activity.
-
-        GlobalScope.launch {
-            link = intent.getStringExtra("link")
-            title = intent.getStringExtra("title")
-            creator = "di " + intent.getStringExtra("creator")
-
-            runOnUiThread {
-                findViewById<TextView>(R.id.titlein).text = title
-                findViewById<TextView>(R.id.creatorin).text = creator
-            }
-        }
     }
 
     public override fun onStart() {
@@ -51,50 +45,21 @@ class ArticleView : Activity() {
         // Load the article text and show it.
         GlobalScope.launch {
             try {
-                val document: Document = Jsoup.connect(link).userAgent("Mozilla").get()
+                val document: Document = Jsoup.connect(link).userAgent("Mozilla/5.0 (Android 4.4; Mobile; rv:41.0) Gecko/41.0 Firefox/41.0").get()
                 document.getElementsByClass("single-line-meta").remove()
-                // TODO: Remove deprecated fromHtml method.
-                val divs: Spanned = Html.fromHtml(document.getElementsByTag("p").html(), ImageGetter(), null)
+                document.getElementById("masthead").remove()
+                document.getElementsByClass("si-share").remove()
+                document.getElementsByClass("nav-single").remove()
+                document.getElementsByClass("comments-area").remove()
+                document.getElementById("secondary").remove()
+                document.getElementsByClass("social col-md-6").remove()
 
                 runOnUiThread {
-                    findViewById<TextView>(R.id.art).text = divs
+                    findViewById<WebView>(R.id.articleview_webview).loadDataWithBaseURL(null, document.html().toString(), "text/html", "utf-8", null)
                 }
 
             } catch (e: IOException) {
                 e.printStackTrace()
-            }
-        }
-
-        // Work with the buttons at the end of the article.
-        val view = findViewById<Button>(R.id.view)
-        view.setOnClickListener {
-            val myWebView = WebView(applicationContext)
-            setContentView(myWebView)
-            myWebView.settings.javaScriptEnabled = false
-            myWebView.settings.builtInZoomControls = false
-            myWebView.loadUrl(link)
-        }
-
-        val share = findViewById<Button>(R.id.share)
-        share.setOnClickListener {
-            val sharingIntent = Intent(android.content.Intent.ACTION_SEND)
-            sharingIntent.type = "text/plain"
-            val shareBody = "$title di $creator\n$link"
-            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody)
-            startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_select)))
-        }
-
-        val send = findViewById<Button>(R.id.send)
-        send.setOnClickListener {
-            val i = Intent(Intent.ACTION_SEND)
-            i.type = "message/rfc822"
-            i.putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.org_email)))
-            i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_object))
-            i.putExtra(Intent.EXTRA_TEXT, getString(R.string.email_text))
-            try {
-                startActivity(Intent.createChooser(i, getString(R.string.share_select)))
-            } catch (ex: android.content.ActivityNotFoundException) {
-                Toast.makeText(this@ArticleView, getString(R.string.error_noclient), Toast.LENGTH_LONG).show()
             }
         }
     }
