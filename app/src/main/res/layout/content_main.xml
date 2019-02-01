@@ -12,13 +12,19 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <ListView
-        android:id="@+id/listView"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swiper"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:paddingBottom="@dimen/nav_header_vertical_spacing"
-</android.support.v4.widget.SwipeRefreshLayout>
-        tools:layout_editor_absoluteX="8dp" />
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:paddingBottom="@dimen/nav_header_vertical_spacing"
+            tools:layout_editor_absoluteX="8dp" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
