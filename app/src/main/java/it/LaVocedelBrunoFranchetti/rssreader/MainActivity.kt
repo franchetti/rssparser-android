@@ -13,6 +13,8 @@ import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.LibsBuilder
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -39,12 +41,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+        swiper.setOnRefreshListener {
+            val feedRefresh = ParseFeed(this@MainActivity)
+
+            GlobalScope.launch {
+                feedRefresh.execute().get()
+                swiper.isRefreshing = false
+            }
+        }
     }
 
     override fun onStart() {
         super.onStart()
-            val task = ParseFeed(this@MainActivity)
-            task.execute()
+
+        swiper.isRefreshing = true
+        val feedRefresh = ParseFeed(this@MainActivity)
+
+        GlobalScope.launch {
+            feedRefresh.execute().get()
+            swiper.isRefreshing = false
+        }
     }
 
     override fun onBackPressed() {
