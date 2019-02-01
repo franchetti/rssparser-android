@@ -5,7 +5,6 @@ import android.content.Context
 import android.os.AsyncTask
 import android.util.Log
 import android.widget.ListView
-import android.widget.ProgressBar
 import org.jsoup.Jsoup
 import org.w3c.dom.Element
 import java.io.BufferedInputStream
@@ -17,11 +16,10 @@ class ParseFeed(context: Context) : AsyncTask<Void, Void, Void>() {
 
     private val contexto: Context = context
     private val activity: Activity = context as Activity
-    private val listView: ListView = activity.findViewById<ListView>(R.id.listView)
+    private val listView: ListView = activity.findViewById(R.id.listView)
 
     private val modelList = ArrayList<Model>()
     private val toBeParsed: Int = 15
-    private val progressDialog: ProgressBar = activity.findViewById(R.id.progressBar)
     private val adapter: CustomAdapter = CustomAdapter(contexto, modelList)
 
     override fun doInBackground(vararg params: Void?): Void? {
@@ -57,8 +55,6 @@ class ParseFeed(context: Context) : AsyncTask<Void, Void, Void>() {
                 modelList.add(model)
                 adapter.notifyDataSetChanged()
             }
-
-            progressDialog.progress = i
         }
         Log.d(TAG, "Parsed all the ${modelList.size} articles correctly.")
         return null
@@ -67,14 +63,10 @@ class ParseFeed(context: Context) : AsyncTask<Void, Void, Void>() {
     override fun onPreExecute() {
         super.onPreExecute()
 
-        progressDialog.isIndeterminate = false
-        progressDialog.max = (toBeParsed - 1)
-
         // TODO: create ProgressBar inflated in AppBar.
     }
 
     override fun onPostExecute(result: Void?) {
         super.onPostExecute(result)
-        // progressDialog.dismiss()
     }
 }
