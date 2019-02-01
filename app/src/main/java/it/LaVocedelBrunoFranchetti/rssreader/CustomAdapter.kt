@@ -4,18 +4,18 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.StrictMode
-import androidx.constraintlayout.widget.ConstraintLayout
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 class CustomAdapter internal constructor(private val context: Context, private val modelList: ArrayList<Model>) : BaseAdapter() {
     private var policy: StrictMode.ThreadPolicy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+
     private val TAG = "CustomAdaptor"
 
     override fun getCount(): Int {

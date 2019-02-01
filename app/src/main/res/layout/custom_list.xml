@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_centerVertical="true"
     android:paddingBottom="@dimen/nav_header_vertical_spacing">
 
@@ -12,10 +13,10 @@
         app:cardBackgroundColor="@color/textColorSecondary"
         app:cardCornerRadius="@dimen/cardview_radius"
         app:cardElevation="@dimen/nav_header_vertical_spacing"
-        app:contentPaddingBottom="7dp"
-        app:contentPaddingLeft="5dp"
-        app:contentPaddingRight="10dp"
-        app:contentPaddingTop="7dp">
+        app:contentPaddingBottom="@dimen/_7sdp"
+        app:contentPaddingLeft="@dimen/_5sdp"
+        app:contentPaddingRight="@dimen/_10sdp"
+        app:contentPaddingTop="@dimen/_7sdp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,7 +26,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="@dimen/_10sdp"
                 android:orientation="vertical">
 
                 <TextView
@@ -33,22 +34,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#444"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/_12ssp"
+                    tools:text="09:46  |  26.01.2019  |  Giorgio"/>
 
                 <TextView
                     android:id="@+id/title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="@dimen/_4sdp"
                     android:textColor="#000"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:text="NUOVA REDAZIONE 2019"/>
 
                 <TextView
                     android:id="@+id/description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/textColorLight"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/_12ssp"
+                    tools:text="BF - La voce del Bruno-Franchetti Redazione Giornalino 2019 Coordinatore progetto: prof...."/>
             </LinearLayout>
         </LinearLayout>
 

@@ -1,28 +1,34 @@
 package it.LaVocedelBrunoFranchetti.rssreader
 
 import android.app.Activity
-import android.app.ProgressDialog
 import android.content.Context
 import android.os.AsyncTask
 import android.util.Log
 import android.widget.ListView
+import android.widget.ProgressBar
 import org.jsoup.Jsoup
 import org.w3c.dom.Element
 import java.io.BufferedInputStream
 import java.net.URL
 import javax.xml.parsers.DocumentBuilderFactory
 
-class ParseFeed(context: Context) : AsyncTask<Void, Void, ArrayList<Model>>() {
-    private val tag: String = "AsyncTask"
-    private val modelList = ArrayList<Model>()
-    // private val contexto: WeakReference<Context> = WeakReference(context)
-    private val contexto: Context = context
-    private val toBeParsed: Int = 15
-    private val progressDialog: ProgressDialog = ProgressDialog(contexto)
+class ParseFeed(context: Context) : AsyncTask<Void, Void, Void>() {
+    private val TAG: String = "AsyncTask"
 
-    override fun doInBackground(vararg params: Void?): ArrayList<Model> {
+    private val contexto: Context = context
+    private val activity: Activity = context as Activity
+    private val listView: ListView = activity.findViewById<ListView>(R.id.listView)
+
+    private val modelList = ArrayList<Model>()
+    private val toBeParsed: Int = 15
+    private val progressDialog: ProgressBar = activity.findViewById(R.id.progressBar)
+    private val adapter: CustomAdapter = CustomAdapter(contexto, modelList)
+
+    override fun doInBackground(vararg params: Void?): Void? {
         val rssLink = "http://istitutobrunofranchetti.gov.it/giornalino/feed/"
         val itemList = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(BufferedInputStream(URL(rssLink).openConnection().inputStream)).getElementsByTagName("item")
+
+        activity.runOnUiThread { listView.adapter = adapter }
 
         for (i in 0 until toBeParsed) {
             // Declare new model storage.
@@ -47,26 +53,28 @@ class ParseFeed(context: Context) : AsyncTask<Void, Void, ArrayList<Model>>() {
             model.description = Jsoup.parse(element.getElementsByTagName("description").item(0).firstChild.nodeValue).text().replace(" Read More", "...")
 
             // Add Model() instance to modelList ArrayList.
-            modelList.add(model)
+            activity.runOnUiThread {
+                modelList.add(model)
+                adapter.notifyDataSetChanged()
+            }
+
             progressDialog.progress = i
         }
-        Log.d(tag, "Parsed all the ${modelList.size} articles correctly.")
-        return modelList
+        Log.d(TAG, "Parsed all the ${modelList.size} articles correctly.")
+        return null
     }
 
     override fun onPreExecute() {
         super.onPreExecute()
+
         progressDialog.isIndeterminate = false
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
-        progressDialog.max = toBeParsed
-        progressDialog.setTitle("Caricamento...")
-        progressDialog.show()
+        progressDialog.max = (toBeParsed - 1)
+
         // TODO: create ProgressBar inflated in AppBar.
     }
 
-    override fun onPostExecute(modelList: ArrayList<Model>) {
-        super.onPostExecute(modelList)
-        (contexto as Activity).findViewById<ListView>(R.id.listView).adapter = CustomAdapter(contexto, modelList)
-        progressDialog.dismiss()
+    override fun onPostExecute(result: Void?) {
+        super.onPostExecute(result)
+        // progressDialog.dismiss()
     }
 }

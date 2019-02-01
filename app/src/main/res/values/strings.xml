@@ -7,7 +7,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="rss_link">http://istitutobrunofranchetti.gov.it/giornalino/feed/</string>
-    <string name="org_email">giornalino@istitutobrunofranchetti.gov.it</string>
+    <string name="org_email">giornalino@istitutobrunofranchetti.edu.it</string>
     <string name="email_object">Proposta di un articolo da *inserisci il tuo nome e classe*</string>
     <string name="email_text">Salve, questa mail è stata generata dall\'app del Giornalino d\'Istituto, allego l\'articolo che / argomento che vorrei fosse trattato in un prossimo articolo:</string>
     <string name="share_select">Scegli come inviarlo:</string>
